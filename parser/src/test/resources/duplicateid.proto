@@ -1,0 +1,34 @@
+// See README.txt for information and build instructions.
+
+package tutorial;
+
+option java_package = "com.example.tutorial";
+option java_outer_classname = "AddressBookProtos2";
+
+import "google/protobuf/descriptor.proto";
+
+extend google.protobuf.MessageOptions {
+    optional int32 type_id2 = 50001;
+}
+
+message Person2 {
+
+  option (type_id2) = 1;
+
+  required int32 id = 2;        // Unique ID number for this person.
+
+  message PhoneNumber2 {
+  	
+  	option (type_id2) = 1;
+  
+    required string number = 1;
+  }
+
+  repeated PhoneNumber2 phone = 4;
+}
+
+// Our address book file is just one of these.
+message AddressBook2 {
+  option (type_id2) = 3;
+  repeated Person2 person = 1;
+}

@@ -1,0 +1,12 @@
+message Company { 
+
+	optional Address address = 1;
+	
+	message Address { 
+	
+		optional PostCode pc = 1;
+		
+		message PostCode { }
+		
+	}
+}

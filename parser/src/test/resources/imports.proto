@@ -1,0 +1,5 @@
+
+// import public "imports/simple2.proto";
+import "imports/simple3.proto";
+
+message Computer { }

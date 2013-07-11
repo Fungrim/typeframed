@@ -1,0 +1,5 @@
+option java_package = "com.example.tutorial";
+option java_generic_services = true;
+option optimize_for = LITE_RUNTIME;
+
+message Site { }

@@ -1,0 +1,5 @@
+message Hood { 
+
+   option message_set_wire_format = true;
+   
+}

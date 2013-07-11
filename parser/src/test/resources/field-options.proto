@@ -1,0 +1,6 @@
+message Screen { 
+
+    optional int32 id = 1 [default = 70];
+    optional double width = 2 [default = 0.11 ];
+   
+}
