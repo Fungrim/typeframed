@@ -16,6 +16,12 @@ subprojects {
   }
 
   ext.libraries = [
-    protobuf:'com.google.protobuf:protobuf-java:2.4.1'
+    protobuf:'com.google.protobuf:protobuf-java:2.4.1',
+    guava:'com.google.guava:guava:14.0.1',
+    log4j:'log4j:log4j:1.2.14',
+    junit:'junit:junit:4.10',
+    mockito:'org.mockito:mockito-all:1.9.5',
+    parboiled:'org.parboiled:parboiled-java:1.1.4',
+    netty:'io.netty:netty-all:4.0.0.CR5'
   ]
 }

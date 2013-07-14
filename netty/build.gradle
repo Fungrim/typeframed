@@ -15,10 +15,9 @@ dependencies {
   compile project(':typeframe-api')
   compile project(':typeframe-parser')
   compile libraries.protobuf
-  compile group: 'com.google.guava', name: 'guava', version:'14.0.1'
-  compile group: 'org.parboiled', name: 'parboiled-java', version:'1.1.4'
-  compile group: 'log4j', name: 'log4j', version:'1.2.14'
-  compile group: 'io.netty', name: 'netty-all', version:'4.0.0.CR5'
-  testCompile group: 'junit', name: 'junit', version:'4.10'
-  testCompile group: 'org.mockito', name: 'mockito-all', version:'1.9.5'
+  compile libraries.guava
+  compile libraries.netty
+  compile libraries.log4j
+  testCompile libraries.junit
+  testCompile libraries.mockito
 }
