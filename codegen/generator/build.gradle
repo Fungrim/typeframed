@@ -1,4 +1,23 @@
-
-
 description = 'typeframe-codegen-generator'
 
+apply plugin: 'protobuf'
+
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath 'ws.antonov.gradle.plugins:gradle-plugin-protobuf:0.8'
+  }
+}
+
+dependencies {
+  compile project(':typeframe-api')
+  compile project(':typeframe-parser')
+  compile libraries.protobuf
+  compile libraries.guava
+  compile libraries.log4j
+  compile libraries.cliparser
+  testCompile libraries.junit
+  testCompile libraries.mockito
+}
