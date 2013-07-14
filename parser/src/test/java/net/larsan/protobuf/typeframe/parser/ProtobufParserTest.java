@@ -28,7 +28,7 @@ public class ProtobufParserTest {
 	public void testReadSimple1() throws Exception {
 		ProtobufParser parser = Parboiled.createParser(ProtobufParser.class);
 		TracingParseRunner runner = new TracingParseRunner(parser.File());
-		String file = CharStreams.toString(new FileReader("src/test/resources/simple1.proto"));
+		String file = CharStreams.toString(new FileReader("src/test/proto/simple1.proto"));
 		ParsingResult result = runner.run(file);
 		checkForErrors(result);
 		Object head = result.valueStack.pop();
@@ -43,7 +43,7 @@ public class ProtobufParserTest {
 	public void testReadPackage() throws Exception {
 		ProtobufParser parser = Parboiled.createParser(ProtobufParser.class);
 		TracingParseRunner runner = new TracingParseRunner(parser.File());
-		String file = CharStreams.toString(new FileReader("src/test/resources/package.proto"));
+		String file = CharStreams.toString(new FileReader("src/test/proto/package.proto"));
 		ParsingResult result = runner.run(file);
 		checkForErrors(result);
 		Object head = result.valueStack.pop();
@@ -55,7 +55,7 @@ public class ProtobufParserTest {
 	public void testReadOptions() throws Exception {
 		ProtobufParser parser = Parboiled.createParser(ProtobufParser.class);
 		TracingParseRunner runner = new TracingParseRunner(parser.File());
-		String file = CharStreams.toString(new FileReader("src/test/resources/options.proto"));
+		String file = CharStreams.toString(new FileReader("src/test/proto/options.proto"));
 		ParsingResult result = runner.run(file);
 		checkForErrors(result);
 		Object head = result.valueStack.pop();
@@ -76,7 +76,7 @@ public class ProtobufParserTest {
 	public void testReadFieldOptions() throws Exception {
 		ProtobufParser parser = Parboiled.createParser(ProtobufParser.class);
 		TracingParseRunner runner = new TracingParseRunner(parser.File());
-		String file = CharStreams.toString(new FileReader("src/test/resources/field-options.proto"));
+		String file = CharStreams.toString(new FileReader("src/test/proto/field-options.proto"));
 		ParsingResult result = runner.run(file);
 		checkForErrors(result);
 		Object head = result.valueStack.pop();
@@ -98,7 +98,7 @@ public class ProtobufParserTest {
 	public void testReadMessageOption() throws Exception {
 		ProtobufParser parser = Parboiled.createParser(ProtobufParser.class);
 		TracingParseRunner runner = new TracingParseRunner(parser.File());
-		String file = CharStreams.toString(new FileReader("src/test/resources/message-options.proto"));
+		String file = CharStreams.toString(new FileReader("src/test/proto/message-options.proto"));
 		ParsingResult result = runner.run(file);
 		checkForErrors(result);
 		Object head = result.valueStack.pop();
@@ -114,7 +114,7 @@ public class ProtobufParserTest {
 	public void testReadCustomOption() throws Exception {
 		ProtobufParser parser = Parboiled.createParser(ProtobufParser.class);
 		TracingParseRunner runner = new TracingParseRunner(parser.File());
-		String file = CharStreams.toString(new FileReader("src/test/resources/custom-options.proto"));
+		String file = CharStreams.toString(new FileReader("src/test/proto/custom-options.proto"));
 		ParsingResult result = runner.run(file);
 		checkForErrors(result);
 		Object head = result.valueStack.pop();
@@ -135,7 +135,7 @@ public class ProtobufParserTest {
 	public void testReadEnum() throws Exception {
 		ProtobufParser parser = Parboiled.createParser(ProtobufParser.class);
 		TracingParseRunner runner = new TracingParseRunner(parser.File());
-		String file = CharStreams.toString(new FileReader("src/test/resources/enums.proto"));
+		String file = CharStreams.toString(new FileReader("src/test/proto/enums.proto"));
 		ParsingResult result = runner.run(file);
 		checkForErrors(result);
 		RootNode root = (RootNode) result.valueStack.pop();
@@ -155,7 +155,7 @@ public class ProtobufParserTest {
 	public void testReadImports() throws Exception {
 		ProtobufParser parser = Parboiled.createParser(ProtobufParser.class);
 		TracingParseRunner runner = new TracingParseRunner(parser.File());
-		String file = CharStreams.toString(new FileReader("src/test/resources/imports.proto"));
+		String file = CharStreams.toString(new FileReader("src/test/proto/imports.proto"));
 		ParsingResult result = runner.run(file);
 		checkForErrors(result);
 	}
@@ -164,7 +164,7 @@ public class ProtobufParserTest {
 	public void testReadNested1() throws Exception {
 		ProtobufParser parser = Parboiled.createParser(ProtobufParser.class);
 		TracingParseRunner runner = new TracingParseRunner(parser.File());
-		String file = CharStreams.toString(new FileReader("src/test/resources/nested1.proto"));
+		String file = CharStreams.toString(new FileReader("src/test/proto/nested1.proto"));
 		ParsingResult result = runner.run(file);
 		checkForErrors(result);
 		Object head = result.valueStack.pop();
@@ -190,7 +190,7 @@ public class ProtobufParserTest {
 	public void testReadHard() throws Exception {
 		ProtobufParser parser = Parboiled.createParser(ProtobufParser.class);
 		TracingParseRunner runner = new TracingParseRunner(parser.File());
-		String file = CharStreams.toString(new FileReader("src/test/resources/hard.proto"));
+		String file = CharStreams.toString(new FileReader("src/test/proto/hard.proto"));
 		ParsingResult result = runner.run(file);
 		checkForErrors(result);
 	}

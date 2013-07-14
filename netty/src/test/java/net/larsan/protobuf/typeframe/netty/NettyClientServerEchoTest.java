@@ -42,7 +42,7 @@ public class NettyClientServerEchoTest {
 	public void init() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		StandardDictionaryParser parser = new StandardDictionaryParser(new OptionInspector("type_id"));
-		typeDictionary = parser.parseDictionary(new File[] { new File("src/test/resources/echo.proto") });
+		typeDictionary = parser.parseDictionary(new File[] { new File("src/test/proto/echo.proto") });
 		ServerBuilder<Integer, NettyServerConfig> builder = NettyServerBuilder.newInstance();
 		server = builder.withDictionary(typeDictionary)
 							.bindTo(InetAddress.getByName("localhost"), 9000)
