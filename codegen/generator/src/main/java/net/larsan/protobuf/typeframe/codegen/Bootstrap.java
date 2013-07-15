@@ -10,4 +10,10 @@ public class Bootstrap {
 	@Argument(alias="i", description="Input directories for PROTO file, comman separated, MANDATORY", required=true, delimiter=",")
 	private String[] inputDirs = null;
 	
+	@Argument(alias="di", description="'WARN' or 'FAIL' on duplicate ID's, defaults to 'FAIL'", required=false)
+	private ErrorMode duplicateIds = ErrorMode.FAIL;
+	
+	@Argument(alias="mi", description="'WARN' or 'FAIL' on missing ID for message, defaults to 'WARN'", required=false)
+	private ErrorMode missingId = ErrorMode.FAIL;
+
 }
