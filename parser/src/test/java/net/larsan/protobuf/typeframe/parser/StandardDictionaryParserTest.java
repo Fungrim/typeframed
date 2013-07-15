@@ -9,7 +9,7 @@ import java.io.File;
 import net.larsan.protobuf.typeframe.Echo.EchoRequest;
 import net.larsan.protobuf.typeframe.Echo.EchoResponse;
 import net.larsan.protobuf.typeframe.Messages.Person;
-import net.larsan.protobuf.typeframe.codegen.IllegalIdException;
+import net.larsan.protobuf.typeframe.codegen.DuplicateIdException;
 import net.larsan.protobuf.typeframe.parser.OptionInspector;
 import net.larsan.protobuf.typeframe.parser.StandardDictionaryParser;
 import net.larsan.protobuf.typeframe.NoSuchTypeException;
@@ -26,7 +26,7 @@ public class StandardDictionaryParserTest {
 		parser.parseClassMap(toSourceArray(new File("src/test/proto/hard.proto")));
 	}
 	
-	@Test(expected=IllegalIdException.class)
+	@Test(expected=DuplicateIdException.class)
 	public void testDuplicateId() throws Exception {
 		StandardDictionaryParser parser = new StandardDictionaryParser(new OptionInspector("type_id2"));
 		parser.parseClassMap(toSourceArray(new File("src/test/proto/duplicateid.proto")));

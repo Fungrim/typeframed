@@ -16,7 +16,6 @@ import java.util.Set;
 import net.larsan.protobuf.typeframe.NoSuchTypeException;
 import net.larsan.protobuf.typeframe.TypeDictionary;
 import net.larsan.protobuf.typeframe.UnknownMessageException;
-import net.larsan.protobuf.typeframe.codegen.IllegalIdException;
 import net.larsan.protobuf.typeframe.parser.ParserError.Location;
 import net.larsan.protobuf.typeframe.parser.node.ExtendNode;
 import net.larsan.protobuf.typeframe.parser.node.FieldNode;
@@ -37,6 +36,8 @@ public class StandardDictionaryParser implements DictionaryParser {
 	
 	private final Logger log = Logger.getLogger(getClass());
 	private MessageInspector inspector;
+	
+	private ErrorHandler errorHandler = new StandardErrorHandler(log);
 	
 	public StandardDictionaryParser(MessageInspector inspector) {
 		this.inspector = inspector;
@@ -132,17 +133,14 @@ public class StandardDictionaryParser implements DictionaryParser {
 		log.debug("Parsing message '" + node.getName() + "'");
 		int id = inspector.getId(node);
 		if(id == -1) {
-			// TODO optionally fail instead
-			log.warn("Did not find any type ID in message '" + node.getName() + "'");
+			errorHandler.typeMissingId(node.getName());
 		} else {
 			String cl = generateClassName(parentClass, javaPackage, node.getName());
 			log.info("Java class name '" + cl + "' mapped to ID " + id);
 			if(map.containsKey(id)) {
-				// TODO optionally warn instead
-				throw new IllegalIdException("ID " + id + " already mapped to type: " + map.get(id).getJavaClassName());
-			} else {
-				map.put(id, new MessageDescriptor(id, cl));
+				errorHandler.duplicateId(id, map.get(id).getNodeName(), node.getName());
 			}
+			map.put(id, new MessageDescriptor(id, node.getName(), cl));
 			for (FieldNode subnode : node.getBody().getNodes()) {
 				if(subnode instanceof MessageNode && !(subnode instanceof ExtendNode)) {
 					parse(cl, (MessageNode) subnode, map, javaPackage);

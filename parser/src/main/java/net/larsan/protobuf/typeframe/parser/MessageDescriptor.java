@@ -9,11 +9,13 @@ public class MessageDescriptor {
 	private int typeId;
 	private String javaClassName;
 	private String javaCanonicalClassName;
+	private String nodeName;
 
-	public MessageDescriptor(int typeId, String javaClassName) {
+	public MessageDescriptor(int typeId, String nodeName, String javaClassName) {
 		this.typeId = typeId;
 		this.javaClassName = javaClassName;
 		this.javaCanonicalClassName = this.javaClassName.replace('$', '.');
+		this.nodeName = nodeName;
 	}
 	
 	public int getTypeId() {
@@ -41,5 +43,9 @@ public class MessageDescriptor {
 	@Override
 	public boolean equals(Object obj) {
 		return EqualsBuilder.reflectionEquals(this, obj);
+	}
+
+	public String getNodeName() {
+		return nodeName;
 	}
 }
