@@ -15,10 +15,10 @@ public class UtilitiesTest {
 
 	@Test
 	public void testFileName() {
-		assertEquals("MyFile", Utilities.getRootClassFromFile(new File("my_file.proto")));
-		assertEquals("MyFile", Utilities.getRootClassFromFile(new File("myFile.proto")));
-		assertEquals("MyFile", Utilities.getRootClassFromFile(new File("my__file.proto")));
-		assertEquals("MyFile", Utilities.getRootClassFromFile(new File("_my__file.proto")));
+		assertEquals("MyFile", Utilities.getRootClassFromFile(new FileSource(new File("my_file.proto"))));
+		assertEquals("MyFile", Utilities.getRootClassFromFile(new FileSource(new File("myFile.proto"))));
+		assertEquals("MyFile", Utilities.getRootClassFromFile(new FileSource(new File("my__file.proto"))));
+		assertEquals("MyFile", Utilities.getRootClassFromFile(new FileSource(new File("_my__file.proto"))));
 	}
 	
 	@Test

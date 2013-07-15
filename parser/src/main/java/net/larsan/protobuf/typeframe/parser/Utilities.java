@@ -1,13 +1,10 @@
 package net.larsan.protobuf.typeframe.parser;
 
-import java.io.File;
-
 import net.larsan.protobuf.typeframe.parser.node.OptionNode;
 
-
 public class Utilities {
-
-	public static String getRootClassFromFile(File file) {
+	
+	public static String getRootClassFromFile(Source file) {
 		boolean nextUpper = true;
 		StringBuilder b = new StringBuilder();
 		String name = file.getName();

@@ -4,14 +4,14 @@ import static net.larsan.protobuf.typeframe.parser.Utilities.getOption;
 import static net.larsan.protobuf.typeframe.parser.Utilities.getRootClassFromFile;
 import static net.larsan.protobuf.typeframe.parser.Utilities.hasOption;
 
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import net.larsan.protobuf.typeframe.NoSuchTypeException;
 import net.larsan.protobuf.typeframe.TypeDictionary;
@@ -43,8 +43,8 @@ public class StandardDictionaryParser implements DictionaryParser {
 	}
 	
 	@Override
-	public TypeDictionary parseDictionary(File[] protoFiles) throws ClassNotFoundException, IOException {
-		final Map<Integer, Class<? extends Message>> map = this.parse(protoFiles);
+	public TypeDictionary parseDictionary(Source[] protoFiles) throws ClassNotFoundException, IOException {
+		final Map<Integer, Class<? extends Message>> map = this.parseClassMap(protoFiles);
 		final Map<Class<? extends Message>, Integer> reverse = new HashMap<Class<? extends Message>, Integer>(map.size());
 		return new TypeDictionary() {
 			
@@ -83,19 +83,31 @@ public class StandardDictionaryParser implements DictionaryParser {
 	}
 	
 	@Override
-	public Map<Integer, Class<? extends Message>> parse(File[] protoFiles) throws IOException, ClassNotFoundException {
-		Map<Integer, Class<? extends Message>> result = new HashMap<Integer, Class<? extends Message>>();
-		for (File f : protoFiles) {
-			parse(f, result);
+	@SuppressWarnings("unchecked")
+	public Map<Integer, Class<? extends Message>> parseClassMap(Source[] protoFiles) throws IOException, ClassNotFoundException {
+		Set<MessageDescriptor> set = parseMessageDescriptors(protoFiles);
+		Map<Integer, Class<? extends Message>> map = new HashMap<Integer, Class<? extends Message>>();
+		for (MessageDescriptor desc : set) {
+			Class<? extends Message> cl = (Class<? extends Message>) getClass().getClassLoader().loadClass(desc.getJavaClassName());
+			map.put(desc.getTypeId(), cl);
 		}
-		return result;
+		return map;
+	}
+	
+	@Override
+	public Set<MessageDescriptor> parseMessageDescriptors(Source[] protoFiles) throws IOException {
+		Map<Integer, MessageDescriptor> map = new HashMap<Integer, MessageDescriptor>();
+		for (Source f : protoFiles) {
+			parse(f, map);
+		}
+		return new HashSet<MessageDescriptor>(map.values());
 	}
 
 	@SuppressWarnings("rawtypes")
-	private void parse(File f, Map<Integer, Class<? extends Message>> map) throws IOException, ClassNotFoundException {
+	private void parse(Source f, Map<Integer, MessageDescriptor> map) throws IOException {
 		ProtobufParser parser = Parboiled.createParser(ProtobufParser.class);
 		ReportingParseRunner runner = new ReportingParseRunner(parser.File());
-		String file = CharStreams.toString(new FileReader(f));
+		String file = CharStreams.toString(f.getReader());
 		ParsingResult result = runner.run(file);
 		if(result.hasErrors()) {
 			throw new ParserError(toStartLocations(result.parseErrors));
@@ -104,7 +116,7 @@ public class StandardDictionaryParser implements DictionaryParser {
 		}
 	}
 
-	private void parse(File file, RootNode root, Map<Integer, Class<? extends Message>> map) throws ClassNotFoundException {
+	private void parse(Source file, RootNode root, Map<Integer, MessageDescriptor> map) {
 		String javaPackage = findPackage(root);
 		log.debug("Java package name: " + javaPackage);
 		String parentClass = findRootClass(file, root, javaPackage);
@@ -116,24 +128,20 @@ public class StandardDictionaryParser implements DictionaryParser {
 		}
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private void parse(String parentClass, MessageNode node, Map<Integer, Class<? extends Message>> map, String javaPackage) throws ClassNotFoundException {
+	private void parse(String parentClass, MessageNode node, Map<Integer, MessageDescriptor> map, String javaPackage) {
 		log.debug("Parsing message '" + node.getName() + "'");
 		int id = inspector.getId(node);
 		if(id == -1) {
+			// TODO optionally fail instead
 			log.warn("Did not find any type ID in message '" + node.getName() + "'");
 		} else {
 			String cl = generateClassName(parentClass, javaPackage, node.getName());
-			Class clazz = getClass().getClassLoader().loadClass(cl);
-			// TODO figure out why this doesn't work.. ?
-			/*if(Message.class.isAssignableFrom(clazz)) {
-				throw new IllegalStateException("Class " + clazz.getName() + " is not a Message");
-			}*/
 			log.info("Java class name '" + cl + "' mapped to ID " + id);
 			if(map.containsKey(id)) {
-				throw new IllegalIdException("ID " + id + " already mapped to type: " + map.get(id).getName());
+				// TODO optionally warn instead
+				throw new IllegalIdException("ID " + id + " already mapped to type: " + map.get(id).getJavaClassName());
 			} else {
-				map.put(id, clazz);
+				map.put(id, new MessageDescriptor(id, cl));
 			}
 			for (FieldNode subnode : node.getBody().getNodes()) {
 				if(subnode instanceof MessageNode && !(subnode instanceof ExtendNode)) {
@@ -143,7 +151,7 @@ public class StandardDictionaryParser implements DictionaryParser {
 		}
 	}
 	
-	private String findRootClass(File file, RootNode root, String javaPackage) {
+	private String findRootClass(Source file, RootNode root, String javaPackage) {
 		String tmp = null; 
 		if(hasOption(root, "java_outer_classname")) {
 			tmp = getOption(root, "java_outer_classname", true);
