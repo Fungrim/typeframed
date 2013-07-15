@@ -26,7 +26,9 @@ import net.larsan.protobuf.typeframe.ServerBuilder;
 import net.larsan.protobuf.typeframe.ServerHandler;
 import net.larsan.protobuf.typeframe.ServerSession;
 import net.larsan.protobuf.typeframe.TypeDictionary;
+import net.larsan.protobuf.typeframe.parser.FileSource;
 import net.larsan.protobuf.typeframe.parser.OptionInspector;
+import net.larsan.protobuf.typeframe.parser.Source;
 import net.larsan.protobuf.typeframe.parser.StandardDictionaryParser;
 
 import org.junit.Before;
@@ -42,7 +44,7 @@ public class NettyClientServerEchoTest {
 	public void init() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		StandardDictionaryParser parser = new StandardDictionaryParser(new OptionInspector("type_id"));
-		typeDictionary = parser.parseDictionary(new File[] { new File("src/test/proto/echo.proto") });
+		typeDictionary = parser.parseDictionary(new Source[] { new FileSource(new File("src/test/proto/echo.proto")) });
 		ServerBuilder<Integer, NettyServerConfig> builder = NettyServerBuilder.newInstance();
 		server = builder.withDictionary(typeDictionary)
 							.bindTo(InetAddress.getByName("localhost"), 9000)

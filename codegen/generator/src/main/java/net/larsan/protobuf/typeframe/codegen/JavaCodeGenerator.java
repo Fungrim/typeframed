@@ -28,7 +28,7 @@ public class JavaCodeGenerator implements CodeGenerator {
 	
 	public void generate() throws ClassNotFoundException, IOException {
 		DictionaryParser parser = new StandardDictionaryParser(new OptionInspector(config.getIdOptionName()));
-		Map<Integer, Class<? extends Message>> map = parser.parse(config.getProtoFiles());
+		Map<Integer, Class<? extends Message>> map = parser.parseClassMap(config.getProtoFiles());
 		String packageName = config.getProperty(Config.JAVA_PACKAGE_NAME, "");
 		File output = new File(getOutputDir(packageName), getOutputFileName());
 		Files.createParentDirs(output);

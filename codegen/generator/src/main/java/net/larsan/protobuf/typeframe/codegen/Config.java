@@ -3,11 +3,13 @@ package net.larsan.protobuf.typeframe.codegen;
 import java.io.File;
 import java.util.Properties;
 
+import net.larsan.protobuf.typeframe.parser.Source;
+
 public class Config {
 	
 	public static final String JAVA_PACKAGE_NAME = "javaPackage";
 
-	private File[] protoFiles;
+	private Source[] protoFiles;
 	private File outputDir;
 	
 	private final Properties properties = new Properties();
@@ -23,11 +25,11 @@ public class Config {
 		return val == null ? def : val;
 	}
 	
-	public File[] getProtoFiles() {
+	public Source[] getProtoFiles() {
 		return protoFiles;
 	}
 	
-	public void setProtoFiles(File[] protoFiles) {
+	public void setProtoFiles(Source[] protoFiles) {
 		this.protoFiles = protoFiles;
 	}
 	
