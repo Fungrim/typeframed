@@ -11,10 +11,27 @@ public class Config {
 
 	private Source[] protoFiles;
 	private File outputDir;
+	private boolean failOnDuplicates = true;
+	private boolean failOnMissingId = false;
+	private String idOptionName;
 	
 	private final Properties properties = new Properties();
+
+	public boolean isFailOnDuplicates() {
+		return failOnDuplicates;
+	}
 	
-	private String idOptionName;
+	public boolean isFailOnMissingId() {
+		return failOnMissingId;
+	}
+	
+	public void setFailOnDuplicates(boolean failOnDuplicates) {
+		this.failOnDuplicates = failOnDuplicates;
+	}
+	
+	public void setFailOnMissingId(boolean failOnMissingId) {
+		this.failOnMissingId = failOnMissingId;
+	}
 	
 	public Properties getProperties() {
 		return properties;

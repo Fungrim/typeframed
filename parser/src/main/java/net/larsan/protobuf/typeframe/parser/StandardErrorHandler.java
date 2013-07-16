@@ -6,7 +6,7 @@ import org.apache.log4j.Logger;
 
 public class StandardErrorHandler implements ErrorHandler {
 
-	private Logger log;
+	protected final Logger log;
 
 	public StandardErrorHandler(Logger log) {
 		this.log = log;

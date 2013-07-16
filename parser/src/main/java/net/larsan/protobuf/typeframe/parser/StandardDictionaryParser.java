@@ -37,10 +37,19 @@ public class StandardDictionaryParser implements DictionaryParser {
 	private final Logger log = Logger.getLogger(getClass());
 	private MessageInspector inspector;
 	
-	private ErrorHandler errorHandler = new StandardErrorHandler(log);
+	private final ErrorHandler errorHandler;
+	
+	public StandardDictionaryParser(MessageInspector inspector, ErrorHandler errorHandler) {
+		this.inspector = inspector;
+		if(errorHandler == null) {
+			this.errorHandler = new StandardErrorHandler(log);
+		} else {
+			this.errorHandler = errorHandler;
+		}
+	}
 	
 	public StandardDictionaryParser(MessageInspector inspector) {
-		this.inspector = inspector;
+		this(inspector, null);
 	}
 	
 	@Override

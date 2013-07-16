@@ -5,15 +5,15 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Set;
 
 import net.larsan.protobuf.typeframe.parser.DictionaryParser;
+import net.larsan.protobuf.typeframe.parser.ErrorHandler;
+import net.larsan.protobuf.typeframe.parser.MessageDescriptor;
 import net.larsan.protobuf.typeframe.parser.OptionInspector;
 import net.larsan.protobuf.typeframe.parser.StandardDictionaryParser;
 
 import com.google.common.io.Files;
-import com.google.protobuf.Message;
 
 public class JavaCodeGenerator implements CodeGenerator {
 
@@ -26,9 +26,10 @@ public class JavaCodeGenerator implements CodeGenerator {
 		this.config = config;
 	}
 	
-	public void generate() throws ClassNotFoundException, IOException {
-		DictionaryParser parser = new StandardDictionaryParser(new OptionInspector(config.getIdOptionName()));
-		Map<Integer, Class<? extends Message>> map = parser.parseClassMap(config.getProtoFiles());
+	public void generate() throws IOException {
+		ErrorHandler handler = new ConfigErrorHandler(config);
+		DictionaryParser parser = new StandardDictionaryParser(new OptionInspector(config.getIdOptionName()), handler);
+		Set<MessageDescriptor> descriptors = parser.parseMessageDescriptors(config.getProtoFiles());
 		String packageName = config.getProperty(Config.JAVA_PACKAGE_NAME, "");
 		File output = new File(getOutputDir(packageName), getOutputFileName());
 		Files.createParentDirs(output);
@@ -51,9 +52,9 @@ public class JavaCodeGenerator implements CodeGenerator {
 			wr.println();
 			println(wr, "public int getId(Message msg) throws UnknownMessageException {", 1);
 			println(wr, "Class<? extends Message> cl = msg.getClass();", 2);
-			for (Entry<Integer, Class<? extends Message>> e : map.entrySet()) {
-				println(wr, "if(" + e.getValue().getCanonicalName() + ".class.equals(cl)) {", 2);
-				println(wr, "return " + e.getKey() + ";", 3);
+			for (MessageDescriptor desc : descriptors) {
+				println(wr, "if(" + desc.getJavaCanonicalClassName() + ".class.equals(cl)) {", 2);
+				println(wr, "return " + desc.getTypeId() + ";", 3);
 				println(wr, "}", 2);
 			}
 			println(wr, "throw new UnknownMessageException(cl);", 2);
@@ -61,9 +62,9 @@ public class JavaCodeGenerator implements CodeGenerator {
 			wr.println();
 			println(wr, "public Message.Builder getBuilderForId(int id) throws NoSuchTypeException {", 1);
 			println(wr, "Class<? extends Message> cl = null;", 2);
-			for (Entry<Integer, Class<? extends Message>> e : map.entrySet()) {
-				println(wr, "if(id == " + e.getKey() + ") {", 2);
-				println(wr, "cl = " + e.getValue().getCanonicalName() + ".class;", 3);
+			for (MessageDescriptor desc : descriptors) {
+				println(wr, "if(id == " + desc.getTypeId() + ") {", 2);
+				println(wr, "cl = " + desc.getJavaCanonicalClassName() + ".class;", 3);
 				println(wr, "}", 2);
 			}
 			println(wr, "if(cl == null) {", 2);
