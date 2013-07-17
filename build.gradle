@@ -28,8 +28,8 @@ subprojects {
   ]
 
   eclipse {
-  	classpath {
+    classpath {
       defaultOutputDir = file("${projectDir}/build/eclipse")
-	}
+    }
   }
 }

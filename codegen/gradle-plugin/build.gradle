@@ -1,0 +1,12 @@
+description = 'typeframe-codegen-gradle-plugin'
+
+apply plugin: 'groovy'
+
+dependencies {
+	compile project(':typeframe-codegen:typeframe-codegen-generator')
+    compile gradleApi()
+    testCompile libraries.junit
+    groovy localGroovy()
+}
+
+

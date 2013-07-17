@@ -21,17 +21,17 @@ public class JavaCodeGenerator implements CodeGenerator {
 	private static final String TAB = "    ";
 	
 	private final Config config;
-
+	
 	public JavaCodeGenerator(Config config) {
 		this.config = config;
 	}
-	
+
 	public void generate() throws IOException {
 		ErrorHandler handler = new ConfigErrorHandler(config);
 		DictionaryParser parser = new StandardDictionaryParser(new OptionInspector(config.getIdOptionName()), handler);
 		Set<MessageDescriptor> descriptors = parser.parseMessageDescriptors(config.getProtoFiles());
-		String packageName = config.getProperty(Config.JAVA_PACKAGE_NAME, "");
-		File output = new File(getOutputDir(packageName), getOutputFileName());
+		String packageName = findPackageName(parser, config);
+		File output = new File(getOutputDir(packageName, config), getOutputFileName());
 		Files.createParentDirs(output);
 		try (PrintWriter wr = createWriter(output)) {
 			println(wr, "// GENERATED CODE !!");
@@ -81,6 +81,11 @@ public class JavaCodeGenerator implements CodeGenerator {
 		}
 	}
 
+	private String findPackageName(DictionaryParser parser, Config config) {
+		// TODO find package from protofile? but what if there are multiple files?
+		return config.getProperty(Config.JAVA_PACKAGE_NAME, "");
+	}
+
 	private void println(PrintWriter wr, String string) {
 		println(wr, string, 0);
 	}
@@ -100,7 +105,7 @@ public class JavaCodeGenerator implements CodeGenerator {
 		return DICTIONARY_CLASSNAME + ".java";
 	}
 
-	private File getOutputDir(String packageName) {
+	private File getOutputDir(String packageName, Config config) {
 		String javaDir = packageName.replace('.', File.separatorChar);
 		if(javaDir.length() > 0) {
 			return new File(config.getOutputDir(), javaDir);

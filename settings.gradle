@@ -1,9 +1,10 @@
 rootProject.name = 'typeframe-root'
-include ':typeframe-api', ':typeframe-parser', ':typeframe-codegen:typeframe-codegen-generator', ':typeframe-codegen:typeframe-codegen-maven-plugin', ':typeframe-codegen', ':typeframe-netty'
+include ':typeframe-api', ':typeframe-parser', ':typeframe-codegen:typeframe-codegen-generator', ':typeframe-codegen:typeframe-codegen-maven-plugin', ':typeframe-codegen:typeframe-codegen-gradle-plugin', ':typeframe-codegen', ':typeframe-netty'
 
 project(':typeframe-api').projectDir = "$rootDir/api" as File
 project(':typeframe-parser').projectDir = "$rootDir/parser" as File
 project(':typeframe-codegen:typeframe-codegen-generator').projectDir = "$rootDir/codegen/generator" as File
 project(':typeframe-codegen:typeframe-codegen-maven-plugin').projectDir = "$rootDir/codegen/maven-plugin" as File
+project(':typeframe-codegen:typeframe-codegen-gradle-plugin').projectDir = "$rootDir/codegen/gradle-plugin" as File
 project(':typeframe-codegen').projectDir = "$rootDir/codegen" as File
 project(':typeframe-netty').projectDir = "$rootDir/netty" as File

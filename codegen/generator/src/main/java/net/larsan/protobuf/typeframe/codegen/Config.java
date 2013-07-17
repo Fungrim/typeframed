@@ -3,6 +3,7 @@ package net.larsan.protobuf.typeframe.codegen;
 import java.io.File;
 import java.util.Properties;
 
+import net.larsan.protobuf.typeframe.parser.FileSource;
 import net.larsan.protobuf.typeframe.parser.Source;
 
 public class Config {
@@ -48,6 +49,13 @@ public class Config {
 	
 	public void setProtoFiles(Source[] protoFiles) {
 		this.protoFiles = protoFiles;
+	}
+	
+	public void setProtoFiles(File[] files) {
+		this.protoFiles = new Source[files.length];
+		for (int i = 0; i < files.length; i++) {
+			this.protoFiles[i] = new FileSource(files[i]);
+		}
 	}
 	
 	public File getOutputDir() {
