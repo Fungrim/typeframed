@@ -3,6 +3,8 @@ package net.larsan.protobuf.typeframe.codegen;
 import java.io.File;
 import java.util.Properties;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import net.larsan.protobuf.typeframe.parser.FileSource;
 import net.larsan.protobuf.typeframe.parser.Source;
 
@@ -72,5 +74,10 @@ public class Config {
 	
 	public void setIdOptionName(String idOptionName) {
 		this.idOptionName = idOptionName;
+	}
+	
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this);
 	}
 }

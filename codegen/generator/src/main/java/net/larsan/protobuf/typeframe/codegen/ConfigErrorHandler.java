@@ -1,22 +1,41 @@
 package net.larsan.protobuf.typeframe.codegen;
 
-import net.larsan.protobuf.typeframe.parser.StandardErrorHandler;
+import net.larsan.protobuf.typeframe.parser.ErrorHandler;
 
 import org.apache.log4j.Logger;
 
-public class ConfigErrorHandler extends StandardErrorHandler {
+public class ConfigErrorHandler implements ErrorHandler {
 	
 	private final boolean failOnDuplicates;
 	private final boolean failOnMissingId;
+	
+	private final CodegenLogger logger;
 
 	public ConfigErrorHandler(Config config) {
-		this(config.isFailOnDuplicates(), config.isFailOnMissingId());
+		this(config, new CodegenLogger() {
+			
+			private final Logger log = Logger.getLogger(JavaCodeGenerator.class);
+			
+			@Override
+			public void warn(String msg) {
+				log.warn(msg);
+			}
+			
+			@Override
+			public void debug(String msg) {
+				log.debug(msg);
+			}
+		});
+	}
+	
+	public ConfigErrorHandler(Config config, CodegenLogger logger) {
+		this(config.isFailOnDuplicates(), config.isFailOnMissingId(), logger);
 	}
 
-	public ConfigErrorHandler(boolean failOnDuplicates, boolean failOnMissingId) {
-		super(Logger.getLogger(ConfigErrorHandler.class));
+	public ConfigErrorHandler(boolean failOnDuplicates, boolean failOnMissingId, CodegenLogger logger) {
 		this.failOnDuplicates = failOnDuplicates;
 		this.failOnMissingId = failOnMissingId;
+		this.logger = logger;
 	}
 
 	@Override
@@ -24,16 +43,16 @@ public class ConfigErrorHandler extends StandardErrorHandler {
 		if(failOnMissingId) {
 			throw new MissingIdException(name);
 		} else {
-			super.typeMissingId(name);
+			logger.warn("Did not find any type ID in message '" + name + "'");	
 		}
 	}
 
 	@Override
 	public void duplicateId(int id, String oldName, String newName) throws DuplicateIdException {
 		if(!failOnDuplicates) {
-			log.warn("Message ID duplication! Old type '" + oldName + "' is overwritten by '" + newName + "' for ID " + id);
+			logger.warn("Message ID duplication! Old type '" + oldName + "' is overwritten by '" + newName + "' for ID " + id);
 		} else {
-			super.duplicateId(id, oldName, newName);
+			throw new DuplicateIdException(id, oldName, newName);	
 		}
 	}
 

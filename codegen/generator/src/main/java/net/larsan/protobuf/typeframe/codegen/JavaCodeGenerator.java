@@ -19,26 +19,88 @@ public class JavaCodeGenerator implements CodeGenerator {
 
 	private static final String DICTIONARY_CLASSNAME = "JavaTypeDictionary";
 	private static final String TAB = "    ";
+	private static final String HANDLER_CLASSNAME = "JavaMessageSwitchHandler";
+	private static final String SWITCH_CLASSNAME = "JavaMessageSwitch";
 	
 	private final Config config;
+	private CodegenLogger logger;
 	
 	public JavaCodeGenerator(Config config) {
 		this.config = config;
 	}
+	
+	public void setCodegenLogger(CodegenLogger logger) {
+		this.logger = logger;
+	}
 
 	public void generate() throws IOException {
-		ErrorHandler handler = new ConfigErrorHandler(config);
+		ErrorHandler handler = (logger == null ? new ConfigErrorHandler(config) : new ConfigErrorHandler(config, logger));
 		DictionaryParser parser = new StandardDictionaryParser(new OptionInspector(config.getIdOptionName()), handler);
 		Set<MessageDescriptor> descriptors = parser.parseMessageDescriptors(config.getProtoFiles());
 		String packageName = findPackageName(parser, config);
-		File output = new File(getOutputDir(packageName, config), getOutputFileName());
+		File outDir = getOutputDir(packageName, config);
+		generateDictionary(parser, descriptors, outDir, packageName);
+		generateSwitch(parser, descriptors, outDir, packageName);
+		generateHandler(parser, descriptors, outDir, packageName);
+	}
+
+	private void generateSwitch(DictionaryParser parser, Set<MessageDescriptor> descriptors, File dir, String packageName) throws IOException {
+		File output = new File(dir, getSwitchFileName());
 		Files.createParentDirs(output);
 		try (PrintWriter wr = createWriter(output)) {
-			println(wr, "// GENERATED CODE !!");
-			if(packageName.length() > 0) {
-				println(wr, "package " + packageName + ";");
+			writePackageHead(packageName, wr);
+			println(wr, "import net.larsan.protobuf.typeframe.codegen.MessageSwitch;");
+			println(wr, "import net.larsan.protobuf.typeframe.UnknownMessageException;");
+			wr.println();
+			println(wr, "import com.google.protobuf.Message;");
+			wr.println();
+			println(wr, "public class " + SWITCH_CLASSNAME + " implements MessageSwitch {");
+			wr.println();
+			println(wr, "protected final " + HANDLER_CLASSNAME + " handler;", 1);
+			println(wr, "protected final " + DICTIONARY_CLASSNAME + " dictionary;", 1);
+			wr.println();
+			println(wr, "public " + SWITCH_CLASSNAME + "(" + HANDLER_CLASSNAME + " handler, " + DICTIONARY_CLASSNAME + " dictionary) {", 1);
+			println(wr, "this.dictionary = dictionary;", 2);
+			println(wr, "this.handler = handler;", 2);
+			println(wr, "}", 1);
+			wr.println();
+			println(wr, "@Override", 1);
+			println(wr, "public void doSwitch(Message msg) {", 1);
+			println(wr, "Class<? extends Message> cl = msg.getClass();", 2);
+			for (MessageDescriptor desc : descriptors) {
+				println(wr, "if(" + desc.getJavaCanonicalClassName() + ".class.equals(cl)) {", 2);
+				println(wr, "handler.handle((" + desc.getJavaCanonicalClassName() + ") msg);", 3);
+				println(wr, "return;", 3);
+				println(wr, "}", 2);
+			}
+			println(wr, "throw new UnknownMessageException(cl);", 2);
+			println(wr, "}", 1);
+			println(wr, "}");
+		}
+	}
+	
+	private void generateHandler(DictionaryParser parser, Set<MessageDescriptor> descriptors, File dir, String packageName) throws IOException {
+		File output = new File(dir, getHandleFileName());
+		Files.createParentDirs(output);
+		try (PrintWriter wr = createWriter(output)) {
+			writePackageHead(packageName, wr);
+			println(wr, "import net.larsan.protobuf.typeframe.codegen.MessageHandler;");
+			wr.println();
+			println(wr, "public abstract class " + HANDLER_CLASSNAME + " implements MessageHandler {");
+			wr.println();
+			for (MessageDescriptor desc : descriptors) {
+				println(wr, "public abstract void handle(" + desc.getJavaCanonicalClassName() + " msg);", 1);
 				wr.println();
 			}
+			println(wr, "}");
+		}
+	}
+
+	private void generateDictionary(DictionaryParser parser, Set<MessageDescriptor> descriptors, File dir, String packageName) throws IOException {
+		File output = new File(dir, getDictionaryFileName());
+		Files.createParentDirs(output);
+		try (PrintWriter wr = createWriter(output)) {
+			writePackageHead(packageName, wr);
 			println(wr, "import net.larsan.protobuf.typeframe.NoSuchTypeException;");
 			println(wr, "import net.larsan.protobuf.typeframe.TypeDictionary;");
 			println(wr, "import net.larsan.protobuf.typeframe.UnknownMessageException;");
@@ -50,6 +112,7 @@ public class JavaCodeGenerator implements CodeGenerator {
 			wr.println();
 			println(wr, "public class " + DICTIONARY_CLASSNAME + " implements TypeDictionary {");
 			wr.println();
+			println(wr, "@Override", 1);
 			println(wr, "public int getId(Message msg) throws UnknownMessageException {", 1);
 			println(wr, "Class<? extends Message> cl = msg.getClass();", 2);
 			for (MessageDescriptor desc : descriptors) {
@@ -60,6 +123,7 @@ public class JavaCodeGenerator implements CodeGenerator {
 			println(wr, "throw new UnknownMessageException(cl);", 2);
 			println(wr, "}", 1);
 			wr.println();
+			println(wr, "@Override", 1);
 			println(wr, "public Message.Builder getBuilderForId(int id) throws NoSuchTypeException {", 1);
 			println(wr, "Class<? extends Message> cl = null;", 2);
 			for (MessageDescriptor desc : descriptors) {
@@ -78,6 +142,14 @@ public class JavaCodeGenerator implements CodeGenerator {
 			println(wr, "}", 2);
 			println(wr, "}", 1);
 			println(wr, "}");
+		}
+	}
+
+	private void writePackageHead(String packageName, PrintWriter wr) {
+		println(wr, "// GENERATED CODE !!");
+		if(packageName.length() > 0) {
+			println(wr, "package " + packageName + ";");
+			wr.println();
 		}
 	}
 
@@ -101,8 +173,16 @@ public class JavaCodeGenerator implements CodeGenerator {
 		return new PrintWriter(new BufferedWriter(new FileWriter(output)));
 	}
 
-	private String getOutputFileName() {
+	private String getDictionaryFileName() {
 		return DICTIONARY_CLASSNAME + ".java";
+	}
+	
+	private String getSwitchFileName() {
+		return SWITCH_CLASSNAME + ".java";
+	}
+	
+	private String getHandleFileName() {
+		return HANDLER_CLASSNAME + ".java";
 	}
 
 	private File getOutputDir(String packageName, Config config) {
