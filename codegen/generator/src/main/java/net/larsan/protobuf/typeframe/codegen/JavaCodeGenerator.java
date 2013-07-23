@@ -54,7 +54,7 @@ public class JavaCodeGenerator implements CodeGenerator {
 			wr.println();
 			println(wr, "import com.google.protobuf.Message;");
 			wr.println();
-			println(wr, "public class " + SWITCH_CLASSNAME + " implements MessageSwitch {");
+			println(wr, "public class " + SWITCH_CLASSNAME + "<H> extends MessageSwitch<H> {");
 			wr.println();
 			println(wr, "protected final " + HANDLER_CLASSNAME + " handler;", 1);
 			println(wr, "protected final " + DICTIONARY_CLASSNAME + " dictionary;", 1);
