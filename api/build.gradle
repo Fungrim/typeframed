@@ -1,4 +1,4 @@
-description = 'typeframe-api'
+description = 'typeframed-api'
 
 dependencies {
     compile libraries.protobuf

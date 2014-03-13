@@ -1,15 +1,15 @@
 allprojects  {
   apply plugin: 'maven'
   apply plugin: 'eclipse'
-  group = 'net.larsan.protobuf.typeframe'
+  group = 'org.typeframed'
   version = '0.1-SNAPSHOT'
 }
 
 subprojects {
   apply plugin: 'java'
 
-  sourceCompatibility = 1.7
-  targetCompatibility = 1.7
+  sourceCompatibility = 1.8
+  targetCompatibility = 1.8
 
   repositories {
     mavenCentral()

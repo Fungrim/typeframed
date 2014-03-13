@@ -1,4 +1,4 @@
-description = 'typeframe-parser'
+description = 'typeframed-protobuf'
 
 apply plugin: 'protobuf'
 
@@ -12,7 +12,7 @@ buildscript {
 }
 
 dependencies {
-  compile project(':typeframe-api')
+  compile project(':typeframed-api')
   compile libraries.protobuf
   compile libraries.guava
   compile libraries.parboiled

@@ -1,4 +1,4 @@
-description = 'typeframe-codegen-generator'
+description = 'typeframed-codegen-generator'
 
 apply plugin: 'protobuf'
 
@@ -12,8 +12,8 @@ buildscript {
 }
 
 dependencies {
-  compile project(':typeframe-api')
-  compile project(':typeframe-parser')
+  compile project(':typeframed-api')
+  compile project(':typeframed-protobuf')
   compile libraries.protobuf
   compile libraries.guava
   compile libraries.log4j
