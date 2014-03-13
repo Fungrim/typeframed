@@ -4,7 +4,7 @@
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
 		
 	<appender name="LOG" class="org.apache.log4j.RollingFileAppender">
-		<param name="File"   value="target/debug.log" />
+		<param name="File"   value="build/debug.log" />
 		<param name="Append" value="false" />	    	
 		<param name="MaxBackupIndex" value="5" />
 		<param name="MaxFileSize" value="20MB" />
