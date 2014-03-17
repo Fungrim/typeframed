@@ -5,6 +5,10 @@ allprojects  {
   version = '0.1-SNAPSHOT'
 }
 
+task wrapper(type: Wrapper) {
+	gradleVersion = '1.11'
+}
+
 subprojects {
   apply plugin: 'java'
 
