@@ -1,4 +1,4 @@
-package net.larsan.protobuf.typeframe.netty;
+package org.typeframed.netty;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;

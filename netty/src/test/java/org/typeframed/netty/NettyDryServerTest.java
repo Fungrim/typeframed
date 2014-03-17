@@ -1,4 +1,4 @@
-package net.larsan.protobuf.typeframe.netty;
+package org.typeframed.netty;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -19,6 +19,7 @@ import org.typeframed.api.Server;
 import org.typeframed.api.ServerHandler;
 import org.typeframed.api.ServerSession;
 import org.typeframed.api.TypeDictionary;
+import org.typeframed.netty.NettyServerBuilder;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.Message.Builder;

@@ -1,4 +1,4 @@
-package net.larsan.protobuf.typeframe.netty;
+package org.typeframed.netty;
 
 import static org.junit.Assert.assertEquals;
 import io.netty.buffer.ByteBuf;
@@ -14,6 +14,8 @@ import org.typeframed.api.MessageEnvelope;
 import org.typeframed.api.TypeDictionary;
 import org.typeframed.api.TypeFrame;
 import org.typeframed.api.digest.CRC32ChecksumProvider;
+import org.typeframed.netty.MessageEnvelopeEncoder;
+import org.typeframed.netty.TypeFrameDecoder;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.Message.Builder;

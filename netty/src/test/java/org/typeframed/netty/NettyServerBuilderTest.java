@@ -1,4 +1,4 @@
-package net.larsan.protobuf.typeframe.netty;
+package org.typeframed.netty;
 
 import java.util.UUID;
 
@@ -11,6 +11,7 @@ import org.typeframed.api.ServerHandler;
 import org.typeframed.api.ServerSession;
 import org.typeframed.api.TypeDictionary;
 import org.typeframed.api.digest.CRC32ChecksumProvider;
+import org.typeframed.netty.NettyServerBuilder;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.Message.Builder;

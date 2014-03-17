@@ -1,4 +1,4 @@
-package net.larsan.protobuf.typeframe.netty;
+package org.typeframed.netty;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
@@ -30,6 +30,10 @@ import org.typeframed.api.ServerBuilder;
 import org.typeframed.api.ServerHandler;
 import org.typeframed.api.ServerSession;
 import org.typeframed.api.TypeDictionary;
+import org.typeframed.netty.NettyClientBuilder;
+import org.typeframed.netty.NettyClientConfig;
+import org.typeframed.netty.NettyServerBuilder;
+import org.typeframed.netty.NettyServerConfig;
 import org.typeframed.protobuf.parser.FileSource;
 import org.typeframed.protobuf.parser.OptionInspector;
 import org.typeframed.protobuf.parser.Source;

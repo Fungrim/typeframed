@@ -1,4 +1,4 @@
-package net.larsan.protobuf.typeframe.netty;
+package org.typeframed.netty;
 
 import org.typeframed.api.Client;
 import org.typeframed.api.ClientBuilder;
