@@ -4,10 +4,9 @@ import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.util.zip.CRC32;
 
-import net.larsan.protobuf.typeframe.digest.CRC32MessageDigest;
-
 import org.junit.Assert;
 import org.junit.Test;
+import org.typeframed.api.digest.CRC32MessageDigest;
 
 public class CRC32MessageDigestTest {
 

@@ -5,8 +5,8 @@ import io.netty.channel.SimpleChannelInboundHandler;
 
 import java.util.UUID;
 
-import net.larsan.protobuf.typeframe.MessageEnvelope;
-import net.larsan.protobuf.typeframe.ServerHandler;
+import org.typeframed.api.MessageEnvelope;
+import org.typeframed.api.ServerHandler;
 
 public class NettyServerHandler<H> extends SimpleChannelInboundHandler<MessageEnvelope<H>> {
 

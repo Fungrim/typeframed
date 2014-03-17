@@ -1,9 +1,10 @@
 package net.larsan.protobuf.typeframe.netty;
 
+import org.typeframed.api.TypeFrame;
+
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.MessageList;
 import io.netty.handler.codec.MessageToMessageDecoder;
-import net.larsan.protobuf.typeframe.TypeFrame;
 
 public class MessageEnvolopeDecoder<H> extends MessageToMessageDecoder<TypeFrame<H>> {
 	

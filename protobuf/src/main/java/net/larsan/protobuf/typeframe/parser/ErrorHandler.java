@@ -1,7 +1,7 @@
 package net.larsan.protobuf.typeframe.parser;
 
-import net.larsan.protobuf.typeframe.codegen.DuplicateIdException;
-import net.larsan.protobuf.typeframe.codegen.MissingIdException;
+import org.typeframed.api.codegen.DuplicateIdException;
+import org.typeframed.api.codegen.MissingIdException;
 
 public interface ErrorHandler {
 

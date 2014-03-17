@@ -9,14 +9,14 @@ import java.io.File;
 import net.larsan.protobuf.typeframe.Echo.EchoRequest;
 import net.larsan.protobuf.typeframe.Echo.EchoResponse;
 import net.larsan.protobuf.typeframe.Messages.Person;
-import net.larsan.protobuf.typeframe.codegen.DuplicateIdException;
 import net.larsan.protobuf.typeframe.parser.OptionInspector;
 import net.larsan.protobuf.typeframe.parser.StandardDictionaryParser;
-import net.larsan.protobuf.typeframe.NoSuchTypeException;
-import net.larsan.protobuf.typeframe.TypeDictionary;
-import net.larsan.protobuf.typeframe.UnknownMessageException;
 
 import org.junit.Test;
+import org.typeframed.api.NoSuchTypeException;
+import org.typeframed.api.TypeDictionary;
+import org.typeframed.api.UnknownMessageException;
+import org.typeframed.api.codegen.DuplicateIdException;
 
 public class StandardDictionaryParserTest {
 

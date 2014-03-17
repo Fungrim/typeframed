@@ -4,10 +4,10 @@ import io.netty.channel.Channel;
 
 import java.util.concurrent.Future;
 
-import com.google.protobuf.Message;
+import org.typeframed.api.MessageEnvelope;
+import org.typeframed.api.MessageSender;
 
-import net.larsan.protobuf.typeframe.MessageEnvelope;
-import net.larsan.protobuf.typeframe.MessageSender;
+import com.google.protobuf.Message;
 
 public class NettyChannelSender<H> implements MessageSender<H> {
 

@@ -1,12 +1,13 @@
 package net.larsan.protobuf.typeframe.netty;
 
+import org.typeframed.api.Client;
+import org.typeframed.api.ClientBuilder;
+
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import net.larsan.protobuf.typeframe.Client;
-import net.larsan.protobuf.typeframe.ClientBuilder;
 
 public class NettyClientBuilder<H> extends ClientBuilder<H, NettyClientConfig> {
 

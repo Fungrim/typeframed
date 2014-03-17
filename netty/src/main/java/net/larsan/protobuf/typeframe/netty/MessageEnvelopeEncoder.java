@@ -8,11 +8,11 @@ import java.io.ByteArrayOutputStream;
 import java.security.DigestOutputStream;
 import java.security.MessageDigest;
 
-import net.larsan.protobuf.typeframe.BuilderConfig;
-import net.larsan.protobuf.typeframe.ChecksumProvider;
-import net.larsan.protobuf.typeframe.HeaderProvider;
-import net.larsan.protobuf.typeframe.MessageEnvelope;
-import net.larsan.protobuf.typeframe.TypeDictionary;
+import org.typeframed.api.BuilderConfig;
+import org.typeframed.api.ChecksumProvider;
+import org.typeframed.api.HeaderProvider;
+import org.typeframed.api.MessageEnvelope;
+import org.typeframed.api.TypeDictionary;
 
 import com.google.protobuf.CodedOutputStream;
 import com.google.protobuf.Message;

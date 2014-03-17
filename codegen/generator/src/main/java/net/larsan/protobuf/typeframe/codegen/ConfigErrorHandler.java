@@ -3,6 +3,8 @@ package net.larsan.protobuf.typeframe.codegen;
 import net.larsan.protobuf.typeframe.parser.ErrorHandler;
 
 import org.apache.log4j.Logger;
+import org.typeframed.api.codegen.DuplicateIdException;
+import org.typeframed.api.codegen.MissingIdException;
 
 public class ConfigErrorHandler implements ErrorHandler {
 	

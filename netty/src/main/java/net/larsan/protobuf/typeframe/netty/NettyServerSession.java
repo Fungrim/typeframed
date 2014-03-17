@@ -7,10 +7,10 @@ import java.util.UUID;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicReference;
 
-import net.larsan.protobuf.typeframe.MessageEnvelope;
-import net.larsan.protobuf.typeframe.MessageReceiver;
-import net.larsan.protobuf.typeframe.MessageSender;
-import net.larsan.protobuf.typeframe.ServerSession;
+import org.typeframed.api.MessageEnvelope;
+import org.typeframed.api.MessageReceiver;
+import org.typeframed.api.MessageSender;
+import org.typeframed.api.ServerSession;
 
 public class NettyServerSession implements ServerSession {
 

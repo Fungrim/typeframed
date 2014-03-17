@@ -4,13 +4,13 @@ import java.util.UUID;
 
 import junit.framework.Assert;
 import net.larsan.protobuf.typeframe.Messages;
-import net.larsan.protobuf.typeframe.Server;
-import net.larsan.protobuf.typeframe.ServerHandler;
-import net.larsan.protobuf.typeframe.ServerSession;
-import net.larsan.protobuf.typeframe.TypeDictionary;
-import net.larsan.protobuf.typeframe.digest.CRC32ChecksumProvider;
 
 import org.junit.Test;
+import org.typeframed.api.Server;
+import org.typeframed.api.ServerHandler;
+import org.typeframed.api.ServerSession;
+import org.typeframed.api.TypeDictionary;
+import org.typeframed.api.digest.CRC32ChecksumProvider;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.Message.Builder;

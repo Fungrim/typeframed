@@ -6,7 +6,7 @@ import io.netty.channel.EventLoopGroup;
 
 import java.net.InetAddress;
 
-import net.larsan.protobuf.typeframe.Server;
+import org.typeframed.api.Server;
 
 public class NettyServer implements Server {
 

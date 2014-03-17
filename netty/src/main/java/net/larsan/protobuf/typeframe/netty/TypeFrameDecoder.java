@@ -9,12 +9,12 @@ import io.netty.handler.codec.CorruptedFrameException;
 import java.io.IOException;
 import java.util.Arrays;
 
-import net.larsan.protobuf.typeframe.BuilderConfig;
-import net.larsan.protobuf.typeframe.ChecksumProvider;
-import net.larsan.protobuf.typeframe.CurruptedChecksumException;
-import net.larsan.protobuf.typeframe.HeaderProvider;
-import net.larsan.protobuf.typeframe.TypeDictionary;
-import net.larsan.protobuf.typeframe.TypeFrame;
+import org.typeframed.api.BuilderConfig;
+import org.typeframed.api.ChecksumProvider;
+import org.typeframed.api.CurruptedChecksumException;
+import org.typeframed.api.HeaderProvider;
+import org.typeframed.api.TypeDictionary;
+import org.typeframed.api.TypeFrame;
 
 import com.google.protobuf.CodedInputStream;
 import com.google.protobuf.InvalidProtocolBufferException;

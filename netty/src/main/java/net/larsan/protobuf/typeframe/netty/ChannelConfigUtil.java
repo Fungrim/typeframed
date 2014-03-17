@@ -1,6 +1,7 @@
 package net.larsan.protobuf.typeframe.netty;
 
-import net.larsan.protobuf.typeframe.BuilderConfig;
+import org.typeframed.api.BuilderConfig;
+
 import io.netty.channel.socket.SocketChannel;
 
 public class ChannelConfigUtil {

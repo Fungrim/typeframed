@@ -13,19 +13,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.SynchronousQueue;
 
 import junit.framework.Assert;
-import net.larsan.protobuf.typeframe.Client;
-import net.larsan.protobuf.typeframe.ClientBuilder;
-import net.larsan.protobuf.typeframe.ClientSession;
 import net.larsan.protobuf.typeframe.Echo.EchoRequest;
 import net.larsan.protobuf.typeframe.Echo.EchoResponse;
-import net.larsan.protobuf.typeframe.Int32HeaderProvider;
-import net.larsan.protobuf.typeframe.MessageEnvelope;
-import net.larsan.protobuf.typeframe.MessageReceiver;
-import net.larsan.protobuf.typeframe.Server;
-import net.larsan.protobuf.typeframe.ServerBuilder;
-import net.larsan.protobuf.typeframe.ServerHandler;
-import net.larsan.protobuf.typeframe.ServerSession;
-import net.larsan.protobuf.typeframe.TypeDictionary;
 import net.larsan.protobuf.typeframe.parser.FileSource;
 import net.larsan.protobuf.typeframe.parser.OptionInspector;
 import net.larsan.protobuf.typeframe.parser.Source;
@@ -34,6 +23,17 @@ import net.larsan.protobuf.typeframe.parser.StandardDictionaryParser;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockitoAnnotations;
+import org.typeframed.api.Client;
+import org.typeframed.api.ClientBuilder;
+import org.typeframed.api.ClientSession;
+import org.typeframed.api.Int32HeaderProvider;
+import org.typeframed.api.MessageEnvelope;
+import org.typeframed.api.MessageReceiver;
+import org.typeframed.api.Server;
+import org.typeframed.api.ServerBuilder;
+import org.typeframed.api.ServerHandler;
+import org.typeframed.api.ServerSession;
+import org.typeframed.api.TypeDictionary;
 
 public class NettyClientServerEchoTest {
 	

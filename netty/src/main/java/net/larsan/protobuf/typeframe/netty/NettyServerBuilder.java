@@ -1,13 +1,14 @@
 package net.larsan.protobuf.typeframe.netty;
 
+import org.typeframed.api.Server;
+import org.typeframed.api.ServerBuilder;
+
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import net.larsan.protobuf.typeframe.Server;
-import net.larsan.protobuf.typeframe.ServerBuilder;
 
 public class NettyServerBuilder<H> extends ServerBuilder<H, NettyServerConfig> {
 

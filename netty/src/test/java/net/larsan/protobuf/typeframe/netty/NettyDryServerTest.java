@@ -9,16 +9,16 @@ import java.util.UUID;
 
 import junit.framework.Assert;
 import net.larsan.protobuf.typeframe.Messages;
-import net.larsan.protobuf.typeframe.Server;
-import net.larsan.protobuf.typeframe.ServerHandler;
-import net.larsan.protobuf.typeframe.ServerSession;
-import net.larsan.protobuf.typeframe.TypeDictionary;
 
 import org.junit.Before;
 import org.junit.Ignore;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.typeframed.api.Server;
+import org.typeframed.api.ServerHandler;
+import org.typeframed.api.ServerSession;
+import org.typeframed.api.TypeDictionary;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.Message.Builder;

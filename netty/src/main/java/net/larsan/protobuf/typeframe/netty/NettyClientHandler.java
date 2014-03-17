@@ -2,9 +2,9 @@ package net.larsan.protobuf.typeframe.netty;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import net.larsan.protobuf.typeframe.MessageEnvelope;
 
 import org.apache.log4j.Logger;
+import org.typeframed.api.MessageEnvelope;
 
 public class NettyClientHandler<H> extends SimpleChannelInboundHandler<MessageEnvelope<H>> {
 

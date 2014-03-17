@@ -5,10 +5,10 @@ import io.netty.channel.Channel;
 import java.net.InetSocketAddress;
 import java.util.concurrent.atomic.AtomicReference;
 
-import net.larsan.protobuf.typeframe.ClientSession;
-import net.larsan.protobuf.typeframe.MessageEnvelope;
-import net.larsan.protobuf.typeframe.MessageReceiver;
-import net.larsan.protobuf.typeframe.MessageSender;
+import org.typeframed.api.ClientSession;
+import org.typeframed.api.MessageEnvelope;
+import org.typeframed.api.MessageReceiver;
+import org.typeframed.api.MessageSender;
 
 public class NettyClientSession implements ClientSession {
 	

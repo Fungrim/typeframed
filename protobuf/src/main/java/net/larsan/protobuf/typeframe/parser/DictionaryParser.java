@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
 
-import net.larsan.protobuf.typeframe.TypeDictionary;
+import org.typeframed.api.TypeDictionary;
 
 import com.google.protobuf.Message;
 

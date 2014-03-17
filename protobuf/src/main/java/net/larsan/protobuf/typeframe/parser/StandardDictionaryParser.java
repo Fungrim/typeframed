@@ -13,9 +13,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import net.larsan.protobuf.typeframe.NoSuchTypeException;
-import net.larsan.protobuf.typeframe.TypeDictionary;
-import net.larsan.protobuf.typeframe.UnknownMessageException;
 import net.larsan.protobuf.typeframe.parser.ParserError.Location;
 import net.larsan.protobuf.typeframe.parser.node.ExtendNode;
 import net.larsan.protobuf.typeframe.parser.node.FieldNode;
@@ -27,6 +24,9 @@ import org.parboiled.Parboiled;
 import org.parboiled.errors.ParseError;
 import org.parboiled.parserunners.ReportingParseRunner;
 import org.parboiled.support.ParsingResult;
+import org.typeframed.api.NoSuchTypeException;
+import org.typeframed.api.TypeDictionary;
+import org.typeframed.api.UnknownMessageException;
 
 import com.google.common.io.CharStreams;
 import com.google.protobuf.Message;

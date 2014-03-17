@@ -4,10 +4,9 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.Random;
 
-import net.larsan.protobuf.typeframe.util.Varints;
-
 import org.junit.Assert;
 import org.junit.Test;
+import org.typeframed.api.util.Varints;
 
 import com.google.protobuf.CodedOutputStream;
 

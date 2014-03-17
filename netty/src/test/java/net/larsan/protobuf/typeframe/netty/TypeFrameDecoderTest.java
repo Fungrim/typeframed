@@ -6,15 +6,15 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.MessageList;
 import junit.framework.Assert;
-import net.larsan.protobuf.typeframe.Int32HeaderProvider;
-import net.larsan.protobuf.typeframe.MessageEnvelope;
 import net.larsan.protobuf.typeframe.Messages;
 import net.larsan.protobuf.typeframe.Messages.Person;
-import net.larsan.protobuf.typeframe.TypeDictionary;
-import net.larsan.protobuf.typeframe.TypeFrame;
-import net.larsan.protobuf.typeframe.digest.CRC32ChecksumProvider;
 
 import org.junit.Test;
+import org.typeframed.api.Int32HeaderProvider;
+import org.typeframed.api.MessageEnvelope;
+import org.typeframed.api.TypeDictionary;
+import org.typeframed.api.TypeFrame;
+import org.typeframed.api.digest.CRC32ChecksumProvider;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.Message.Builder;

@@ -1,8 +1,7 @@
 package net.larsan.protobuf.typeframe.parser;
 
-import net.larsan.protobuf.typeframe.codegen.DuplicateIdException;
-
 import org.apache.log4j.Logger;
+import org.typeframed.api.codegen.DuplicateIdException;
 
 public class StandardErrorHandler implements ErrorHandler {
 
