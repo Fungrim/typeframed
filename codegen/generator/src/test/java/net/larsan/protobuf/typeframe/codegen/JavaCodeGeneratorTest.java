@@ -2,10 +2,9 @@ package net.larsan.protobuf.typeframe.codegen;
 
 import java.io.File;
 
-import net.larsan.protobuf.typeframe.parser.FileSource;
-import net.larsan.protobuf.typeframe.parser.Source;
-
 import org.junit.Test;
+import org.typeframed.protobuf.parser.FileSource;
+import org.typeframed.protobuf.parser.Source;
 
 // TODO test compilation...
 public class JavaCodeGeneratorTest {

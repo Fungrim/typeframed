@@ -1,0 +1,36 @@
+package org.typeframed.protobuf.parser;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.io.File;
+import java.util.Collections;
+
+import org.junit.Test;
+import org.mockito.Mockito;
+import org.typeframed.protobuf.parser.FileSource;
+import org.typeframed.protobuf.parser.OptionsHolder;
+import org.typeframed.protobuf.parser.Utilities;
+import org.typeframed.protobuf.parser.node.OptionNode;
+
+public class UtilitiesTest {
+
+	@Test
+	public void testFileName() {
+		assertEquals("MyFile", Utilities.getRootClassFromFile(new FileSource(new File("my_file.proto"))));
+		assertEquals("MyFile", Utilities.getRootClassFromFile(new FileSource(new File("myFile.proto"))));
+		assertEquals("MyFile", Utilities.getRootClassFromFile(new FileSource(new File("my__file.proto"))));
+		assertEquals("MyFile", Utilities.getRootClassFromFile(new FileSource(new File("_my__file.proto"))));
+	}
+	
+	@Test
+	public void testOptions() {
+		OptionsHolder mock = Mockito.mock(OptionsHolder.class);
+		OptionNode node = new OptionNode();
+		node.setName("name");
+		node.setValue("\"kalle\"");
+		Mockito.when(mock.getOptions()).thenReturn(Collections.singletonList(node));
+		assertTrue(Utilities.hasOption(mock, "name"));
+		assertEquals("kalle", Utilities.getOption(mock, "name", true));
+	}
+}

@@ -8,12 +8,11 @@ import java.io.PrintWriter;
 import java.util.Set;
 
 import org.typeframed.api.codegen.CodeGenerator;
-
-import net.larsan.protobuf.typeframe.parser.DictionaryParser;
-import net.larsan.protobuf.typeframe.parser.ErrorHandler;
-import net.larsan.protobuf.typeframe.parser.MessageDescriptor;
-import net.larsan.protobuf.typeframe.parser.OptionInspector;
-import net.larsan.protobuf.typeframe.parser.StandardDictionaryParser;
+import org.typeframed.protobuf.parser.DictionaryParser;
+import org.typeframed.protobuf.parser.ErrorHandler;
+import org.typeframed.protobuf.parser.MessageDescriptor;
+import org.typeframed.protobuf.parser.OptionInspector;
+import org.typeframed.protobuf.parser.StandardDictionaryParser;
 
 import com.google.common.io.Files;
 

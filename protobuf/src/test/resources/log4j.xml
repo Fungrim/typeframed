@@ -20,7 +20,7 @@
 		</layout>		
 	</appender>
 	
-	<category name="net.larsan" additivity="false">
+	<category name="org.typeframed" additivity="false">
 		<priority value="trace"/>
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="LOG"/>

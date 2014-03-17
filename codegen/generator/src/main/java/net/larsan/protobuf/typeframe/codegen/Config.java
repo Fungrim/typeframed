@@ -4,9 +4,8 @@ import java.io.File;
 import java.util.Properties;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
-import net.larsan.protobuf.typeframe.parser.FileSource;
-import net.larsan.protobuf.typeframe.parser.Source;
+import org.typeframed.protobuf.parser.FileSource;
+import org.typeframed.protobuf.parser.Source;
 
 public class Config {
 	

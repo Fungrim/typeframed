@@ -15,10 +15,6 @@ import java.util.concurrent.SynchronousQueue;
 import junit.framework.Assert;
 import net.larsan.protobuf.typeframe.Echo.EchoRequest;
 import net.larsan.protobuf.typeframe.Echo.EchoResponse;
-import net.larsan.protobuf.typeframe.parser.FileSource;
-import net.larsan.protobuf.typeframe.parser.OptionInspector;
-import net.larsan.protobuf.typeframe.parser.Source;
-import net.larsan.protobuf.typeframe.parser.StandardDictionaryParser;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -34,6 +30,10 @@ import org.typeframed.api.ServerBuilder;
 import org.typeframed.api.ServerHandler;
 import org.typeframed.api.ServerSession;
 import org.typeframed.api.TypeDictionary;
+import org.typeframed.protobuf.parser.FileSource;
+import org.typeframed.protobuf.parser.OptionInspector;
+import org.typeframed.protobuf.parser.Source;
+import org.typeframed.protobuf.parser.StandardDictionaryParser;
 
 public class NettyClientServerEchoTest {
 	
