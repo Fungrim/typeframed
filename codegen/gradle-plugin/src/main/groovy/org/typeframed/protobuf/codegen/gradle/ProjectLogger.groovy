@@ -1,8 +1,8 @@
-package net.larsan.protobuf.typeframe.codegen.gradle
+package org.typeframed.protobuf.codegen.gradle
 
 import org.gradle.api.Project;
 
-import net.larsan.protobuf.typeframe.codegen.CodegenLogger
+import org.typeframed.protobuf.codegen.CodegenLogger
 
 
 class ProjectLogger implements CodegenLogger {

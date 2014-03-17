@@ -1,4 +1,4 @@
-package net.larsan.protobuf.typeframe.codegen.gradle
+package org.typeframed.protobuf.codegen.gradle
 
 import org.gradle.api.Project;
 

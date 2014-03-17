@@ -1,9 +1,9 @@
-package net.larsan.protobuf.typeframe.codegen.gradle
+package org.typeframed.protobuf.codegen.gradle
 
-import net.larsan.protobuf.typeframe.codegen.CodeGenerator
-import net.larsan.protobuf.typeframe.codegen.CodegenLogger;
-import net.larsan.protobuf.typeframe.codegen.Config
-import net.larsan.protobuf.typeframe.codegen.JavaCodeGenerator
+import org.typeframed.protobuf.codegen.CodeGenerator
+import org.typeframed.protobuf.codegen.CodegenLogger;
+import org.typeframed.protobuf.codegen.Config
+import org.typeframed.protobuf.codegen.JavaCodeGenerator
 
 import org.gradle.api.DefaultTask;
 import org.gradle.api.tasks.SourceTask;
