@@ -6,7 +6,7 @@ dependencies {
     compile project(':typeframed-codegen:typeframed-codegen-generator')
     compile gradleApi()
     testCompile libraries.junit
-    groovy localGroovy()
+    compile localGroovy()
 }
 
 
