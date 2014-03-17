@@ -1,8 +1,10 @@
-package net.larsan.protobuf.typeframe.codegen;
+package org.typeframed.protobuf.codegen;
 
 import java.io.File;
 
 import org.junit.Test;
+import org.typeframed.protobuf.codegen.Config;
+import org.typeframed.protobuf.codegen.JavaCodeGenerator;
 import org.typeframed.protobuf.parser.FileSource;
 import org.typeframed.protobuf.parser.Source;
 

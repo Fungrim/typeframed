@@ -1,4 +1,4 @@
-package net.larsan.protobuf.typeframe.codegen;
+package org.typeframed.protobuf.codegen;
 
 import org.apache.log4j.Logger;
 import org.typeframed.api.codegen.DuplicateIdException;

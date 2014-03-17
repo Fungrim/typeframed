@@ -1,4 +1,4 @@
-package net.larsan.protobuf.typeframe.codegen;
+package org.typeframed.protobuf.codegen;
 
 import com.sampullara.cli.Argument;
 
