@@ -1,9 +1,9 @@
-package org.typeframed.protobuf.codegen.gradle;
+package org.typeframed.codegen.gradle;
 
 import static org.junit.Assert.*;
 
-import org.typeframed.protobuf.codegen.Config
-import org.typeframed.protobuf.codegen.JavaCodeGenerator
+import org.typeframed.codegen.Config
+import org.typeframed.codegen.JavaCodeGenerator
 import org.junit.Test;
 
 class TestJavaAccess {

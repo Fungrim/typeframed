@@ -1,4 +1,4 @@
-package org.typeframed.protobuf.codegen;
+package org.typeframed.codegen;
 
 import java.io.File;
 import java.util.Properties;

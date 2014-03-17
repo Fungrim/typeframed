@@ -1,10 +1,10 @@
-package org.typeframed.protobuf.codegen;
+package org.typeframed.codegen;
 
 import java.io.File;
 
 import org.junit.Test;
-import org.typeframed.protobuf.codegen.Config;
-import org.typeframed.protobuf.codegen.JavaCodeGenerator;
+import org.typeframed.codegen.Config;
+import org.typeframed.codegen.JavaCodeGenerator;
 import org.typeframed.protobuf.parser.FileSource;
 import org.typeframed.protobuf.parser.Source;
 

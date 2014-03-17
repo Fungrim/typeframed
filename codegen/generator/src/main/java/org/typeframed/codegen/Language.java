@@ -1,4 +1,4 @@
-package org.typeframed.protobuf.codegen;
+package org.typeframed.codegen;
 
 public enum Language {
 

@@ -1,4 +1,4 @@
-package org.typeframed.protobuf.codegen.gradle
+package org.typeframed.codegen.gradle
 
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
