@@ -1,7 +1,4 @@
-package org.typeframed.api.codegen;
-
-import org.typeframed.api.MessageEnvelope;
-import org.typeframed.api.MessageReceiver;
+package org.typeframed.api;
 
 import com.google.protobuf.Message;
 

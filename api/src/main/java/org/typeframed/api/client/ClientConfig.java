@@ -1,4 +1,6 @@
-package org.typeframed.api;
+package org.typeframed.api.client;
+
+import org.typeframed.api.BuilderConfig;
 
 public class ClientConfig extends BuilderConfig {
 

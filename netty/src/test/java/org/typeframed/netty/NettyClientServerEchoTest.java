@@ -19,17 +19,17 @@ import net.larsan.protobuf.typeframe.Echo.EchoResponse;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockitoAnnotations;
-import org.typeframed.api.Client;
-import org.typeframed.api.ClientBuilder;
-import org.typeframed.api.ClientSession;
-import org.typeframed.api.Int32HeaderProvider;
+import org.typeframed.api.Int32HeaderParser;
 import org.typeframed.api.MessageEnvelope;
 import org.typeframed.api.MessageReceiver;
-import org.typeframed.api.Server;
-import org.typeframed.api.ServerBuilder;
-import org.typeframed.api.ServerHandler;
-import org.typeframed.api.ServerSession;
 import org.typeframed.api.TypeDictionary;
+import org.typeframed.api.client.Client;
+import org.typeframed.api.client.ClientBuilder;
+import org.typeframed.api.client.ClientSession;
+import org.typeframed.api.server.Server;
+import org.typeframed.api.server.ServerBuilder;
+import org.typeframed.api.server.ServerHandler;
+import org.typeframed.api.server.ServerSession;
 import org.typeframed.netty.client.NettyClientBuilder;
 import org.typeframed.netty.client.NettyClientConfig;
 import org.typeframed.netty.server.NettyServerBuilder;
@@ -52,7 +52,7 @@ public class NettyClientServerEchoTest {
 		ServerBuilder<Integer, NettyServerConfig> builder = NettyServerBuilder.newInstance();
 		server = builder.withDictionary(typeDictionary)
 							.bindTo(InetAddress.getByName("localhost"), 9000)
-							.withHeader(new Int32HeaderProvider())
+							.withHeader(new Int32HeaderParser())
 							.withHandler(new EchoHandler()).build();
 		server.start();
 	}
@@ -60,7 +60,7 @@ public class NettyClientServerEchoTest {
 	@Test
 	public void testServerEcho() throws Exception {
 		ClientBuilder<Integer, NettyClientConfig> builder = NettyClientBuilder.newInstance();
-		Client client = builder.withHeader(new Int32HeaderProvider())
+		Client client = builder.withHeader(new Int32HeaderParser())
 							.withDictionary(typeDictionary)
 							.connectTo(InetAddress.getByName("localhost"), 9000)
 							.build();

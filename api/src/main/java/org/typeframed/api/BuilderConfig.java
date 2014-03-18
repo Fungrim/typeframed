@@ -6,7 +6,7 @@ public class BuilderConfig {
 	
 	private ChecksumProvider checksum;
 	private TypeDictionary dictionary;
-	private HeaderProvider<?> header;
+	private HeaderParser<?> header;
 	private InetAddress address;
 	private int port;
 	
@@ -33,11 +33,11 @@ public class BuilderConfig {
 		this.dictionary = dictionary;
 	}
 
-	public HeaderProvider<?> getHeader() {
+	public HeaderParser<?> getHeader() {
 		return header;
 	}
 
-	public void setHeader(HeaderProvider<?> header) {
+	public void setHeader(HeaderParser<?> header) {
 		this.header = header;
 	}
 

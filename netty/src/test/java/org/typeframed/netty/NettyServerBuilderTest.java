@@ -6,11 +6,11 @@ import junit.framework.Assert;
 import net.larsan.protobuf.typeframe.Messages;
 
 import org.junit.Test;
-import org.typeframed.api.Server;
-import org.typeframed.api.ServerHandler;
-import org.typeframed.api.ServerSession;
 import org.typeframed.api.TypeDictionary;
 import org.typeframed.api.digest.CRC32ChecksumProvider;
+import org.typeframed.api.server.Server;
+import org.typeframed.api.server.ServerHandler;
+import org.typeframed.api.server.ServerSession;
 import org.typeframed.netty.server.NettyServerBuilder;
 
 import com.google.protobuf.Message;

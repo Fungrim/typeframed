@@ -15,10 +15,10 @@ import org.junit.Ignore;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.typeframed.api.Server;
-import org.typeframed.api.ServerHandler;
-import org.typeframed.api.ServerSession;
 import org.typeframed.api.TypeDictionary;
+import org.typeframed.api.server.Server;
+import org.typeframed.api.server.ServerHandler;
+import org.typeframed.api.server.ServerSession;
 import org.typeframed.netty.server.NettyServerBuilder;
 
 import com.google.protobuf.Message;

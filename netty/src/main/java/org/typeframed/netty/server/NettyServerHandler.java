@@ -6,7 +6,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import java.util.UUID;
 
 import org.typeframed.api.MessageEnvelope;
-import org.typeframed.api.ServerHandler;
+import org.typeframed.api.server.ServerHandler;
 
 public class NettyServerHandler<H> extends SimpleChannelInboundHandler<MessageEnvelope<H>> {
 

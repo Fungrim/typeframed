@@ -1,4 +1,6 @@
-package org.typeframed.api;
+package org.typeframed.api.server;
+
+import org.typeframed.api.BuilderConfig;
 
 public class ServerConfig extends BuilderConfig {
 

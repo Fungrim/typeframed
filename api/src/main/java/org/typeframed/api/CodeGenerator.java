@@ -1,4 +1,4 @@
-package org.typeframed.api.codegen;
+package org.typeframed.api;
 
 public interface CodeGenerator {
 

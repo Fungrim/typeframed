@@ -1,4 +1,4 @@
-package org.typeframed.api;
+package org.typeframed.api.server;
 
 import java.util.UUID;
 

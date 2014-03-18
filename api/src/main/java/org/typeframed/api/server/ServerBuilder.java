@@ -1,6 +1,10 @@
-package org.typeframed.api;
+package org.typeframed.api.server;
 
 import java.net.InetAddress;
+
+import org.typeframed.api.ChecksumProvider;
+import org.typeframed.api.HeaderParser;
+import org.typeframed.api.TypeDictionary;
 
 public abstract class ServerBuilder<H, C extends ServerConfig> {
 
@@ -16,7 +20,7 @@ public abstract class ServerBuilder<H, C extends ServerConfig> {
 		return this;
 	}
 	
-	public ServerBuilder<H, C> withHeader(HeaderProvider<H> provider) {
+	public ServerBuilder<H, C> withHeader(HeaderParser<H> provider) {
 		this.config.setHeader(provider);
 		return this;
 	}

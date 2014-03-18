@@ -2,7 +2,7 @@ package org.typeframed.api;
 
 import com.google.protobuf.Message;
 
-public class TypeFrame<H> {
+public class NetworkFrame<H> {
 
 	private int length;
 	private int type;

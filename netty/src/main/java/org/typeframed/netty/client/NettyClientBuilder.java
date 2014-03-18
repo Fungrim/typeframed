@@ -6,8 +6,8 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 
-import org.typeframed.api.Client;
-import org.typeframed.api.ClientBuilder;
+import org.typeframed.api.client.Client;
+import org.typeframed.api.client.ClientBuilder;
 import org.typeframed.netty.util.ChannelConfigUtil;
 import org.typeframed.netty.util.ClientBootstrapHelper;
 

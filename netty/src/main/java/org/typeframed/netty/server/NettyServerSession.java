@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import org.typeframed.api.MessageEnvelope;
 import org.typeframed.api.MessageReceiver;
 import org.typeframed.api.MessageSender;
-import org.typeframed.api.ServerSession;
+import org.typeframed.api.server.ServerSession;
 import org.typeframed.netty.NettyChannelSender;
 import org.typeframed.netty.util.ChannelFutureWrapper;
 

@@ -1,8 +1,8 @@
 package org.typeframed.codegen;
 
 import org.apache.log4j.Logger;
-import org.typeframed.api.codegen.DuplicateIdException;
-import org.typeframed.api.codegen.MissingIdException;
+import org.typeframed.api.DuplicateIdException;
+import org.typeframed.api.MissingIdException;
 import org.typeframed.protobuf.parser.ErrorHandler;
 
 public class ConfigErrorHandler implements ErrorHandler {

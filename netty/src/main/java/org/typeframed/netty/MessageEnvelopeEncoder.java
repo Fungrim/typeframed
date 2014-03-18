@@ -10,7 +10,7 @@ import java.security.MessageDigest;
 
 import org.typeframed.api.BuilderConfig;
 import org.typeframed.api.ChecksumProvider;
-import org.typeframed.api.HeaderProvider;
+import org.typeframed.api.HeaderParser;
 import org.typeframed.api.MessageEnvelope;
 import org.typeframed.api.TypeDictionary;
 
@@ -20,7 +20,7 @@ import com.google.protobuf.Message;
 public class MessageEnvelopeEncoder<H> extends MessageToByteEncoder<MessageEnvelope<H>> {
 
 	private ChecksumProvider checksum;
-	private HeaderProvider<H> header;
+	private HeaderParser<H> header;
 	private final TypeDictionary dictionary;
 	
 	public MessageEnvelopeEncoder(TypeDictionary dictionary) {
@@ -31,14 +31,14 @@ public class MessageEnvelopeEncoder<H> extends MessageToByteEncoder<MessageEnvel
 	public MessageEnvelopeEncoder(BuilderConfig config) {
 		this.dictionary = config.getDictionary();
 		this.checksum = config.getChecksum();
-		this.header = (HeaderProvider<H>) config.getHeader();
+		this.header = (HeaderParser<H>) config.getHeader();
 	}
 
 	public void setChecksum(ChecksumProvider checksum) {
 		this.checksum = checksum;
 	}
 	
-	public void setHeader(HeaderProvider<H> header) {
+	public void setHeader(HeaderParser<H> header) {
 		this.header = header;
 	}
 	

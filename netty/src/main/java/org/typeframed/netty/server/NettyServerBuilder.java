@@ -1,7 +1,7 @@
 package org.typeframed.netty.server;
 
-import org.typeframed.api.Server;
-import org.typeframed.api.ServerBuilder;
+import org.typeframed.api.server.Server;
+import org.typeframed.api.server.ServerBuilder;
 import org.typeframed.netty.util.ChannelConfigUtil;
 import org.typeframed.netty.util.ServerBootstrapHelper;
 

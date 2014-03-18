@@ -5,7 +5,7 @@ import io.netty.channel.Channel;
 
 import java.net.InetAddress;
 
-import org.typeframed.api.Client;
+import org.typeframed.api.client.Client;
 
 public class NettyClient implements Client {
 

@@ -11,10 +11,10 @@ import net.larsan.protobuf.typeframe.Echo.EchoResponse;
 import net.larsan.protobuf.typeframe.Messages.Person;
 
 import org.junit.Test;
+import org.typeframed.api.DuplicateIdException;
 import org.typeframed.api.NoSuchTypeException;
 import org.typeframed.api.TypeDictionary;
 import org.typeframed.api.UnknownMessageException;
-import org.typeframed.api.codegen.DuplicateIdException;
 import org.typeframed.protobuf.parser.FileSource;
 import org.typeframed.protobuf.parser.OptionInspector;
 import org.typeframed.protobuf.parser.Source;

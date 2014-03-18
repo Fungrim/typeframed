@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Set;
 
-import org.typeframed.api.codegen.CodeGenerator;
+import org.typeframed.api.CodeGenerator;
 import org.typeframed.protobuf.parser.DictionaryParser;
 import org.typeframed.protobuf.parser.ErrorHandler;
 import org.typeframed.protobuf.parser.MessageDescriptor;
