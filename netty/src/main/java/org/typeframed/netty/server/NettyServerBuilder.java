@@ -1,7 +1,9 @@
-package org.typeframed.netty;
+package org.typeframed.netty.server;
 
 import org.typeframed.api.Server;
 import org.typeframed.api.ServerBuilder;
+import org.typeframed.netty.util.ChannelConfigUtil;
+import org.typeframed.netty.util.ServerBootstrapHelper;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
@@ -12,12 +14,19 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 public class NettyServerBuilder<H> extends ServerBuilder<H, NettyServerConfig> {
 
+	private ServerBootstrapHelper helper;
+
 	public static <H> ServerBuilder<H, NettyServerConfig> newInstance() {
 		return new NettyServerBuilder<H>();
 	}
 	
 	private NettyServerBuilder() {
 		super(new NettyServerConfig());
+	}
+	
+	public NettyServerBuilder<H> withBootstrapHelper(ServerBootstrapHelper helper) {
+		this.helper = helper;
+		return this;
 	}
 	
 	@Override
@@ -34,6 +43,11 @@ public class NettyServerBuilder<H> extends ServerBuilder<H, NettyServerConfig> {
                 	 ch.pipeline().addLast(new NettyServerHandler<H>(config.getHandler()));
                  }
              });
-         return new NettyServer(bossGroup, workerGroup, boot, config.getAddress(), config.getPort());
+		if(helper != null) {
+			boot = helper.assist(boot);
+			bossGroup = boot.group();
+			workerGroup = boot.childGroup();
+		}
+        return new NettyServer(bossGroup, workerGroup, boot, config.getAddress(), config.getPort());
 	}
 }

@@ -1,4 +1,4 @@
-package org.typeframed.netty;
+package org.typeframed.netty.util;
 
 import io.netty.channel.ChannelFuture;
 

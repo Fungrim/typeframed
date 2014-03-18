@@ -1,4 +1,4 @@
-package org.typeframed.netty;
+package org.typeframed.netty.server;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;

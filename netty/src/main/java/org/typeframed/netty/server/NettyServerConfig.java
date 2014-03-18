@@ -1,4 +1,4 @@
-package org.typeframed.netty;
+package org.typeframed.netty.server;
 
 import org.typeframed.api.ServerConfig;
 

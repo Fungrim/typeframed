@@ -19,7 +19,7 @@ import org.typeframed.api.Server;
 import org.typeframed.api.ServerHandler;
 import org.typeframed.api.ServerSession;
 import org.typeframed.api.TypeDictionary;
-import org.typeframed.netty.NettyServerBuilder;
+import org.typeframed.netty.server.NettyServerBuilder;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.Message.Builder;

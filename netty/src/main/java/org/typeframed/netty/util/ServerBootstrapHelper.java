@@ -1,8 +1,8 @@
-package org.typeframed.netty;
+package org.typeframed.netty.util;
 
 import io.netty.bootstrap.ServerBootstrap;
 
-public interface NettyBootstrapHelper {
+public interface ServerBootstrapHelper {
 
 	public ServerBootstrap assist(ServerBootstrap boot);
 	

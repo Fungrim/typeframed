@@ -1,4 +1,4 @@
-package org.typeframed.netty;
+package org.typeframed.netty.client;
 
 import org.typeframed.api.ClientConfig;
 

@@ -1,6 +1,9 @@
-package org.typeframed.netty;
+package org.typeframed.netty.util;
 
 import org.typeframed.api.BuilderConfig;
+import org.typeframed.netty.MessageEnvelopeEncoder;
+import org.typeframed.netty.MessageEnvolopeDecoder;
+import org.typeframed.netty.TypeFrameDecoder;
 
 import io.netty.channel.socket.SocketChannel;
 

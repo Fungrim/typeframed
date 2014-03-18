@@ -6,6 +6,7 @@ import java.util.concurrent.Future;
 
 import org.typeframed.api.MessageEnvelope;
 import org.typeframed.api.MessageSender;
+import org.typeframed.netty.util.ChannelFutureWrapper;
 
 import com.google.protobuf.Message;
 

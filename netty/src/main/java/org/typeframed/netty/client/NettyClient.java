@@ -1,4 +1,4 @@
-package org.typeframed.netty;
+package org.typeframed.netty.client;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
