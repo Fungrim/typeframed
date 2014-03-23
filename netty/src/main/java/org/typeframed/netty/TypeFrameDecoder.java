@@ -13,8 +13,8 @@ import org.typeframed.api.BuilderConfig;
 import org.typeframed.api.ChecksumProvider;
 import org.typeframed.api.CurruptedChecksumException;
 import org.typeframed.api.HeaderParser;
-import org.typeframed.api.TypeDictionary;
 import org.typeframed.api.NetworkFrame;
+import org.typeframed.api.TypeDictionary;
 
 import com.google.protobuf.CodedInputStream;
 import com.google.protobuf.InvalidProtocolBufferException;

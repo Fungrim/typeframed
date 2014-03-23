@@ -1,7 +1,5 @@
 package org.typeframed.codegen;
 
-import org.typeframed.api.CodeGenerator;
-
 public class JavaCodeGeneratorFactory implements CodeGeneratorFactory {
 
 	@Override

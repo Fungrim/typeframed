@@ -1,5 +1,5 @@
 rootProject.name = 'typeframed-root'
-include ':typeframed-api', ':typeframed-protobuf', ':typeframed-codegen:typeframed-codegen-generator', ':typeframed-codegen:typeframed-codegen-maven-plugin', ':typeframed-codegen:typeframed-codegen-gradle-plugin', ':typeframed-codegen', ':typeframed-netty'
+include ':typeframed-api', ':typeframed-protobuf', ':typeframed-codegen:typeframed-codegen-generator', ':typeframed-codegen:typeframed-codegen-maven-plugin', ':typeframed-codegen:typeframed-codegen-gradle-plugin', ':typeframed-codegen'
 
 project(':typeframed-api').projectDir = "$rootDir/api" as File
 project(':typeframed-protobuf').projectDir = "$rootDir/protobuf" as File
@@ -7,4 +7,3 @@ project(':typeframed-codegen:typeframed-codegen-generator').projectDir = "$rootD
 project(':typeframed-codegen:typeframed-codegen-maven-plugin').projectDir = "$rootDir/codegen/maven-plugin" as File
 project(':typeframed-codegen:typeframed-codegen-gradle-plugin').projectDir = "$rootDir/codegen/gradle-plugin" as File
 project(':typeframed-codegen').projectDir = "$rootDir/codegen" as File
-project(':typeframed-netty').projectDir = "$rootDir/netty" as File
