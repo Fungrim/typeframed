@@ -1,20 +1,15 @@
 package org.typeframed.api;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 
-public class Int32HeaderParser implements HeaderParser<Integer> {
-
-	@Override
-	public int getByteLength() {
-		return 4;
-	}
+public class Int32HeaderProvider implements HeaderProvider<Integer> {
 
 	@Override
-	public Integer parse(byte[] bytes) {
+	public Integer fromBytes(byte[] bytes) {
 		try {
 			return new DataInputStream(new ByteArrayInputStream(bytes)).readInt();
 		} catch (IOException e) { 
@@ -23,9 +18,11 @@ public class Int32HeaderParser implements HeaderParser<Integer> {
 	}
 	
 	@Override
-	public void write(Integer head, OutputStream out) throws IOException {
-		DataOutputStream dout = new DataOutputStream(out);
+	public byte[] toBytes(Integer head) throws IOException {
+		ByteArrayOutputStream ba = new ByteArrayOutputStream(4);
+		DataOutputStream dout = new DataOutputStream(ba);
 		dout.writeInt(head);
 		dout.flush();
+		return ba.toByteArray();
 	}
 }

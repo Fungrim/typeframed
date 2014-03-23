@@ -15,8 +15,8 @@ import org.typeframed.api.MessageEnvelope;
 import org.typeframed.api.NetworkFrame;
 import org.typeframed.api.TypeDictionary;
 import org.typeframed.api.digest.CRC32ChecksumProvider;
+import org.typeframed.api.io.TypeFrameDecoder;
 import org.typeframed.netty.MessageEnvelopeEncoder;
-import org.typeframed.netty.TypeFrameDecoder;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.Message.Builder;

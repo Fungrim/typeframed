@@ -1,5 +1,16 @@
 description = 'typeframed-api'
 
+apply plugin: 'protobuf'
+
+buildscript {
+	repositories {
+	  mavenCentral()
+	}
+	dependencies {
+	  classpath 'ws.antonov.gradle.plugins:gradle-plugin-protobuf:0.8'
+	}
+  }
+
 dependencies {
     compile libraries.protobuf
     compile libraries.guava

@@ -1,0 +1,8 @@
+package org.typeframed.api;
+
+message Tell {
+
+  required string msg = 1;
+  
+}
+

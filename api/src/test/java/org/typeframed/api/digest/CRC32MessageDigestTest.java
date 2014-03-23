@@ -1,4 +1,4 @@
-package net.larsan.protobuf.typeframe.digest;
+package org.typeframed.api.digest;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;

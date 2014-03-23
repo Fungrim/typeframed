@@ -7,11 +7,6 @@ import org.typeframed.api.ChecksumProvider;
 public class CRC32ChecksumProvider implements ChecksumProvider {
 
 	@Override
-	public int getByteLength() {
-		return 4;
-	}
-
-	@Override
 	public byte[] calculate(byte[] rawMessage) {
 		MessageDigest dig = new CRC32MessageDigest();
 		return dig.digest(rawMessage);

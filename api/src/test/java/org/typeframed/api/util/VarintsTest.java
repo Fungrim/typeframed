@@ -1,4 +1,4 @@
-package net.larsan.protobuf.typeframe;
+package org.typeframed.api.util;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -10,12 +10,12 @@ import org.typeframed.api.util.Varints;
 
 import com.google.protobuf.CodedOutputStream;
 
-public class ProtobufUtilTest {
+public class VarintsTest {
 
 	private final Random rand = new Random();
 	
 	@Test
-	public void test() throws Exception {
+	public void testRandomNumber() throws Exception {
 		int[] source = new int[513];
 		for (int i = 0; i < source.length; i++) {
 			source[i] = rand.nextInt(50000);
