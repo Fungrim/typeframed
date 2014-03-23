@@ -10,10 +10,10 @@ import net.larsan.protobuf.typeframe.Messages;
 import net.larsan.protobuf.typeframe.Messages.Person;
 
 import org.junit.Test;
-import org.typeframed.api.Int32HeaderProvider;
+import org.typeframed.api.Int32HeaderParser;
 import org.typeframed.api.MessageEnvelope;
+import org.typeframed.api.NetworkFrame;
 import org.typeframed.api.TypeDictionary;
-import org.typeframed.api.TypeFrame;
 import org.typeframed.api.digest.CRC32ChecksumProvider;
 import org.typeframed.netty.MessageEnvelopeEncoder;
 import org.typeframed.netty.TypeFrameDecoder;
@@ -30,7 +30,7 @@ public class TypeFrameDecoderTest {
 		TypeDictionary dict = createTypeDictionary();
 		TypeFrameDecoder<Integer> decoder = new TypeFrameDecoder<Integer>(dict);
 		decoder.setChecksum(new CRC32ChecksumProvider());
-		decoder.setHeader(new Int32HeaderProvider());
+		decoder.setHeader(new Int32HeaderParser());
 		MessageList<Object> list = MessageList.newInstance();
 		decoder.decode(null, wrappedBuffer(bytes, 0, 0), list);
 		assertEquals(0, list.size());
@@ -40,7 +40,7 @@ public class TypeFrameDecoderTest {
 		assertEquals(0, list.size());
 		decoder.decode(null, wrappedBuffer(bytes), list); 
 		assertEquals(1, list.size());
-		TypeFrame<Integer> frame = (TypeFrame<Integer>) list.get(0);
+		NetworkFrame<Integer> frame = (NetworkFrame<Integer>) list.get(0);
 		assertEquals(18, frame.getLength());
 		assertEquals(666, frame.getType());
 		assertEquals(new Integer(1974), frame.getHeader());
@@ -69,7 +69,7 @@ public class TypeFrameDecoderTest {
 		final TypeDictionary dict = createTypeDictionary();
 		MessageEnvelopeEncoder<Integer> encoder = new MessageEnvelopeEncoder<Integer>(dict);
 		encoder.setChecksum(new CRC32ChecksumProvider());
-		encoder.setHeader(new Int32HeaderProvider());
+		encoder.setHeader(new Int32HeaderParser());
 		ByteBuf bytes = Unpooled.buffer();
 		encoder.encode(null, MessageEnvelope.wrap(1974, person1), bytes);
 		bytes.resetReaderIndex();

@@ -3,7 +3,7 @@ package org.typeframed.api;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public interface HeaderProvider<T> {
+public interface HeaderParser<T> {
 	
 	public int getByteLength();
 

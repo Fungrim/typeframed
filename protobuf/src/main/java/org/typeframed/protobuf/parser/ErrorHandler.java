@@ -1,7 +1,7 @@
 package org.typeframed.protobuf.parser;
 
-import org.typeframed.api.codegen.DuplicateIdException;
-import org.typeframed.api.codegen.MissingIdException;
+import org.typeframed.api.DuplicateIdException;
+import org.typeframed.api.MissingIdException;
 
 public interface ErrorHandler {
 

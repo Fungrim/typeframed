@@ -2,7 +2,7 @@ package org.typeframed.api;
 
 import com.google.protobuf.Message;
 
-public class TypeFrame<H> {
+public class MessageFrame<H> {
 
 	private int length;
 	private int type;
@@ -48,9 +48,5 @@ public class TypeFrame<H> {
 	
 	public void setChecksum(byte[] checksum) {
 		this.checksum = checksum;
-	}
-
-	public MessageEnvelope<H> toEnvelope() {
-		return MessageEnvelope.wrap(header, message);
 	}
 }

@@ -6,7 +6,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class Int32HeaderProvider implements HeaderProvider<Integer> {
+public class Int32HeaderParser implements HeaderParser<Integer> {
 
 	@Override
 	public int getByteLength() {

@@ -12,9 +12,9 @@ import java.util.Arrays;
 import org.typeframed.api.BuilderConfig;
 import org.typeframed.api.ChecksumProvider;
 import org.typeframed.api.CurruptedChecksumException;
-import org.typeframed.api.HeaderProvider;
+import org.typeframed.api.HeaderParser;
+import org.typeframed.api.NetworkFrame;
 import org.typeframed.api.TypeDictionary;
-import org.typeframed.api.TypeFrame;
 
 import com.google.protobuf.CodedInputStream;
 import com.google.protobuf.InvalidProtocolBufferException;
@@ -25,7 +25,7 @@ public class TypeFrameDecoder<H> extends ByteToMessageDecoder {
 	private final TypeDictionary dictionary;
 	
 	private ChecksumProvider checksum;
-	private HeaderProvider<H> header;
+	private HeaderParser<H> header;
 	
 	public TypeFrameDecoder(TypeDictionary dictionary) {
 		this.dictionary = dictionary;
@@ -35,14 +35,14 @@ public class TypeFrameDecoder<H> extends ByteToMessageDecoder {
 	public TypeFrameDecoder(BuilderConfig config) {
 		this.dictionary = config.getDictionary();
 		this.checksum = config.getChecksum();
-		this.header = (HeaderProvider<H>) config.getHeader();
+		this.header = (HeaderParser<H>) config.getHeader();
 	}
 
 	public void setChecksum(ChecksumProvider checksum) {
 		this.checksum = checksum;
 	}
 	
-	public void setHeader(HeaderProvider<H> header) {
+	public void setHeader(HeaderParser<H> header) {
 		this.header = header;
 	}
 
@@ -67,8 +67,8 @@ public class TypeFrameDecoder<H> extends ByteToMessageDecoder {
 		}
 	}
 
-	private TypeFrame<H> createTypeFrame(ByteBuf in, int len, int type) throws IOException, InvalidProtocolBufferException {
-		TypeFrame<H> frame = new TypeFrame<H>();
+	private NetworkFrame<H> createTypeFrame(ByteBuf in, int len, int type) throws IOException, InvalidProtocolBufferException {
+		NetworkFrame<H> frame = new NetworkFrame<H>();
 		frame.setLength(len);
 		frame.setType(type);
 		
@@ -90,7 +90,7 @@ public class TypeFrameDecoder<H> extends ByteToMessageDecoder {
 		return frame;
 	}
 
-	private void checkSetChecksum(ByteBuf in, TypeFrame<H> frame, byte[] rawMessage) {
+	private void checkSetChecksum(ByteBuf in, NetworkFrame<H> frame, byte[] rawMessage) {
 		if(checksum != null) {
 			byte[] check = new byte[checksum.getByteLength()];
 			in.readBytes(check);
@@ -102,7 +102,7 @@ public class TypeFrameDecoder<H> extends ByteToMessageDecoder {
 		}
 	}
 
-	private void checkSetHeader(ByteBuf in, TypeFrame<H> frame) {
+	private void checkSetHeader(ByteBuf in, NetworkFrame<H> frame) {
 		if(header != null) {
 			byte[] buff = new byte[header.getByteLength()];
 			in.readBytes(buff);
