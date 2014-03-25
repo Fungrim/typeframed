@@ -17,10 +17,11 @@ import com.google.common.io.Files;
 
 public class JavaCodeGenerator implements CodeGenerator {
 
-	private static final String DICTIONARY_CLASSNAME = "JavaTypeDictionary";
 	private static final String TAB = "    ";
-	private static final String HANDLER_CLASSNAME = "JavaMessageSwitchHandler";
-	private static final String SWITCH_CLASSNAME = "JavaMessageSwitch";
+
+	private static final String DICTIONARY_CLASSNAME = "JavaTypeDictionary";
+	private static final String HANDLER_CLASSNAME = "JavaTypeSwitchTarget";
+	private static final String SWITCH_CLASSNAME = "JavaTypeSwitch";
 	
 	private final Config config;
 	private CodegenLogger logger;
@@ -29,10 +30,12 @@ public class JavaCodeGenerator implements CodeGenerator {
 		this.config = config;
 	}
 	
+	@Override
 	public void setCodegenLogger(CodegenLogger logger) {
 		this.logger = logger;
 	}
 
+	@Override
 	public void generate() throws IOException {
 		ErrorHandler handler = (logger == null ? new ConfigErrorHandler(config) : new ConfigErrorHandler(config, logger));
 		DictionaryParser parser = new StandardDictionaryParser(new OptionInspector(config.getIdOptionName()), handler);
@@ -49,32 +52,33 @@ public class JavaCodeGenerator implements CodeGenerator {
 		Files.createParentDirs(output);
 		try (PrintWriter wr = createWriter(output)) {
 			writePackageHead(packageName, wr);
-			println(wr, "import net.larsan.protobuf.typeframe.codegen.MessageSwitch;");
-			println(wr, "import net.larsan.protobuf.typeframe.UnknownMessageException;");
-			println(wr, "import net.larsan.protobuf.typeframe.TypeDictionary;");
+			println(wr, "import org.typeframed.api.util.TypeSwitch;");
+			println(wr, "import org.typeframed.api.util.TypeSwitch.Target;");
+			println(wr, "import org.typeframed.api.UnknownMessageException;");
+			println(wr, "import org.typeframed.api.TypeDictionary;");
 			wr.println();
 			println(wr, "import com.google.protobuf.Message;");
 			wr.println();
-			println(wr, "public class " + SWITCH_CLASSNAME + "<H> extends MessageSwitch<H> {");
+			println(wr, "public class " + SWITCH_CLASSNAME + " extends TypeSwitch {");
 			wr.println();
-			println(wr, "protected final " + HANDLER_CLASSNAME + " handler;", 1);
+			println(wr, "protected final " + HANDLER_CLASSNAME + " target;", 1);
 			println(wr, "protected final TypeDictionary dictionary;", 1);
 			wr.println();
-			println(wr, "public " + SWITCH_CLASSNAME + "(" + HANDLER_CLASSNAME + " handler) {", 1);
-			println(wr, "this(handler, new " + DICTIONARY_CLASSNAME + "());", 2);
+			println(wr, "public " + SWITCH_CLASSNAME + "(" + HANDLER_CLASSNAME + " target) {", 1);
+			println(wr, "this(target, new " + DICTIONARY_CLASSNAME + "());", 2);
 			println(wr, "}", 1);
 			wr.println();
-			println(wr, "public " + SWITCH_CLASSNAME + "(" + HANDLER_CLASSNAME + " handler, TypeDictionary dictionary) {", 1);
+			println(wr, "public " + SWITCH_CLASSNAME + "(" + HANDLER_CLASSNAME + " target, TypeDictionary dictionary) {", 1);
 			println(wr, "this.dictionary = dictionary;", 2);
-			println(wr, "this.handler = handler;", 2);
+			println(wr, "this.target = target;", 2);
 			println(wr, "}", 1);
 			wr.println();
 			println(wr, "@Override", 1);
-			println(wr, "public void doSwitch(Message msg) {", 1);
+			println(wr, "public void forward(Message msg) {", 1);
 			println(wr, "Class<? extends Message> cl = msg.getClass();", 2);
 			for (MessageDescriptor desc : descriptors) {
 				println(wr, "if(" + desc.getJavaCanonicalClassName() + ".class.equals(cl)) {", 2);
-				println(wr, "handler.handle((" + desc.getJavaCanonicalClassName() + ") msg);", 3);
+				println(wr, "target.handle((" + desc.getJavaCanonicalClassName() + ") msg);", 3);
 				println(wr, "return;", 3);
 				println(wr, "}", 2);
 			}
@@ -89,9 +93,9 @@ public class JavaCodeGenerator implements CodeGenerator {
 		Files.createParentDirs(output);
 		try (PrintWriter wr = createWriter(output)) {
 			writePackageHead(packageName, wr);
-			println(wr, "import net.larsan.protobuf.typeframe.codegen.MessageHandler;");
+			println(wr, "import org.typeframed.api.util.TypeSwitch.Target;");
 			wr.println();
-			println(wr, "public abstract class " + HANDLER_CLASSNAME + " implements MessageHandler {");
+			println(wr, "public abstract class " + HANDLER_CLASSNAME + " implements Target {");
 			wr.println();
 			for (MessageDescriptor desc : descriptors) {
 				println(wr, "public abstract void handle(" + desc.getJavaCanonicalClassName() + " msg);", 1);
@@ -106,9 +110,9 @@ public class JavaCodeGenerator implements CodeGenerator {
 		Files.createParentDirs(output);
 		try (PrintWriter wr = createWriter(output)) {
 			writePackageHead(packageName, wr);
-			println(wr, "import net.larsan.protobuf.typeframe.NoSuchTypeException;");
-			println(wr, "import net.larsan.protobuf.typeframe.TypeDictionary;");
-			println(wr, "import net.larsan.protobuf.typeframe.UnknownMessageException;");
+			println(wr, "import org.typeframed.api.NoSuchTypeException;");
+			println(wr, "import org.typeframed.api.TypeDictionary;");
+			println(wr, "import org.typeframed.api.UnknownMessageException;");
 			wr.println();
 			println(wr, "import com.google.protobuf.Message;");
 			println(wr, "import com.google.protobuf.Message.Builder;");

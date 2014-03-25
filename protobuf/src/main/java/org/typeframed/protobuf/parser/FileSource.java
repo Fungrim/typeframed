@@ -12,7 +12,7 @@ public class FileSource implements Source {
 	public FileSource(File file) {
 		this.file = file;
 	}
-	
+
 	@Override
 	public String getName() {
 		return file.getName();

@@ -14,7 +14,6 @@ buildscript {
 dependencies {
     compile libraries.protobuf
     compile libraries.guava
-    compile libraries.log4j
     testCompile libraries.junit
     testCompile libraries.mockito
 }

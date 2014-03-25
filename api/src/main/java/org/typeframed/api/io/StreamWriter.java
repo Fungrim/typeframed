@@ -54,7 +54,7 @@ public class StreamWriter<H> implements EnvelopeWriter<H> {
 		ByteArrayOutputStream bout = new ByteArrayOutputStream();
 		DigestOutputStream dout = new DigestOutputStream(bout, digest);
 		CodedOutputStream cout = CodedOutputStream.newInstance(dout);
-		dout.on(false); // calculating only on message itself
+		// dout.on(false); // calculating only on message itself
 		/*
 		 * 1: Mandatory type
 		 */

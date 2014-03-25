@@ -22,7 +22,6 @@ subprojects {
     junit:'junit:junit:4.10',
     mockito:'org.mockito:mockito-all:1.9.5',
     parboiled:'org.parboiled:parboiled-java:1.1.4',
-    cliparser:'com.github.spullara.cli-parser:cli-parser:1.1',
     commonslang:'org.apache.commons:commons-lang3:3.1'
   ]
 
