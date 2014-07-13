@@ -19,7 +19,7 @@ import org.parboiled.errors.ParseError;
 import org.parboiled.parserunners.ReportingParseRunner;
 import org.parboiled.support.ParsingResult;
 import org.typeframed.api.NoSuchTypeException;
-import org.typeframed.api.TypeDictionary;
+import org.typeframed.api.MessageTypeDictionary;
 import org.typeframed.api.UnknownMessageException;
 import org.typeframed.protobuf.parser.ParserError.Location;
 import org.typeframed.protobuf.parser.node.ExtendNode;
@@ -52,10 +52,10 @@ public class StandardDictionaryParser implements DictionaryParser {
 	}
 	
 	@Override
-	public TypeDictionary parseDictionary(Source[] protoFiles) throws ClassNotFoundException, IOException {
+	public MessageTypeDictionary parseDictionary(Source[] protoFiles) throws ClassNotFoundException, IOException {
 		final Map<Integer, Class<? extends Message>> map = this.parseClassMap(protoFiles);
 		final Map<Class<? extends Message>, Integer> reverse = new HashMap<Class<? extends Message>, Integer>(map.size());
-		return new TypeDictionary() {
+		return new MessageTypeDictionary() {
 			
 			@Override
 			public synchronized int getId(Message msg) throws UnknownMessageException {

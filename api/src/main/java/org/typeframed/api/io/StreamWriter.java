@@ -8,11 +8,11 @@ import java.io.OutputStream;
 import java.security.DigestOutputStream;
 import java.security.MessageDigest;
 
-import org.typeframed.api.ChecksumProvider;
 import org.typeframed.api.Envelope;
 import org.typeframed.api.EnvelopeWriter;
 import org.typeframed.api.HeaderProvider;
-import org.typeframed.api.TypeDictionary;
+import org.typeframed.api.MessageTypeDictionary;
+import org.typeframed.api.digest.ChecksumProvider;
 import org.typeframed.api.util.NullDigest;
 
 import com.google.protobuf.CodedOutputStream;
@@ -22,10 +22,10 @@ public class StreamWriter<H> implements EnvelopeWriter<H> {
 
 	private ChecksumProvider checksum;
 	private HeaderProvider<H> header;
-	private TypeDictionary dictionary;
+	private MessageTypeDictionary dictionary;
 	private OutputStream target;
 	
-	public StreamWriter(TypeDictionary dictionary, OutputStream target) {
+	public StreamWriter(MessageTypeDictionary dictionary, OutputStream target) {
 		checkNotNull(dictionary);
 		checkNotNull(target);
 		this.target = target;

@@ -11,14 +11,10 @@ import net.larsan.protobuf.typeframe.Echo.EchoResponse;
 import net.larsan.protobuf.typeframe.Messages.Person;
 
 import org.junit.Test;
-import org.typeframed.api.DuplicateIdException;
+import org.typeframed.api.MessageTypeDictionary;
 import org.typeframed.api.NoSuchTypeException;
-import org.typeframed.api.TypeDictionary;
 import org.typeframed.api.UnknownMessageException;
-import org.typeframed.protobuf.parser.FileSource;
-import org.typeframed.protobuf.parser.OptionInspector;
-import org.typeframed.protobuf.parser.Source;
-import org.typeframed.protobuf.parser.StandardDictionaryParser;
+import org.typeframed.api.codegen.DuplicateIdException;
 
 public class StandardDictionaryParserTest {
 
@@ -37,7 +33,7 @@ public class StandardDictionaryParserTest {
 	@Test
 	public void testTypeDictionaryParsing() throws Exception {
 		StandardDictionaryParser parser = new StandardDictionaryParser(new OptionInspector("type_id"));
-		TypeDictionary dict = parser.parseDictionary(toSourceArray(new File("src/test/proto/echo.proto")));
+		MessageTypeDictionary dict = parser.parseDictionary(toSourceArray(new File("src/test/proto/echo.proto")));
 		assertEquals(1, dict.getId(EchoRequest.getDefaultInstance()));
 		assertEquals(2, dict.getId(EchoResponse.getDefaultInstance()));
 		try {

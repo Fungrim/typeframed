@@ -2,8 +2,6 @@ package org.typeframed.api.digest;
 
 import java.security.MessageDigest;
 
-import org.typeframed.api.ChecksumProvider;
-
 public class CRC32ChecksumProvider implements ChecksumProvider {
 
 	@Override

@@ -8,12 +8,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 
-import org.typeframed.api.ChecksumProvider;
-import org.typeframed.api.CurruptedChecksumException;
 import org.typeframed.api.Envelope;
 import org.typeframed.api.EnvelopeReader;
 import org.typeframed.api.HeaderProvider;
-import org.typeframed.api.TypeDictionary;
+import org.typeframed.api.MessageTypeDictionary;
+import org.typeframed.api.digest.ChecksumProvider;
+import org.typeframed.api.digest.CurruptedChecksumException;
 
 import com.google.protobuf.CodedInputStream;
 import com.google.protobuf.Message.Builder;
@@ -22,10 +22,10 @@ public class StreamReader<H> implements EnvelopeReader<H> {
 
 	private ChecksumProvider checksum;
 	private HeaderProvider<H> header;
-	private TypeDictionary dictionary;
+	private MessageTypeDictionary dictionary;
 	private InputStream target;
 	
-	public StreamReader(TypeDictionary dictionary, InputStream target) {
+	public StreamReader(MessageTypeDictionary dictionary, InputStream target) {
 		checkNotNull(dictionary);
 		checkNotNull(target);
 		this.target = target;

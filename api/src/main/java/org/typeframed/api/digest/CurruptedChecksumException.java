@@ -1,4 +1,4 @@
-package org.typeframed.api;
+package org.typeframed.api.digest;
 
 public class CurruptedChecksumException extends IllegalStateException {
 

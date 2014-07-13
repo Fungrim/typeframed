@@ -8,22 +8,22 @@ import java.io.ByteArrayOutputStream;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.typeframed.api.ChecksumProvider;
 import org.typeframed.api.Envelope;
 import org.typeframed.api.HeaderProvider;
 import org.typeframed.api.Int32HeaderProvider;
+import org.typeframed.api.MessageTypeDictionary;
 import org.typeframed.api.Msg.Tell;
 import org.typeframed.api.NoSuchTypeException;
-import org.typeframed.api.TypeDictionary;
 import org.typeframed.api.UnknownMessageException;
 import org.typeframed.api.digest.CRC32ChecksumProvider;
+import org.typeframed.api.digest.ChecksumProvider;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.Message.Builder;
 
 public class StreamTest {
 
-	private TypeDictionary types;
+	private MessageTypeDictionary types;
 	private ChecksumProvider checksum;
 	private HeaderProvider<Integer> header;
 	
@@ -31,7 +31,7 @@ public class StreamTest {
 	public void setup() throws Exception {
 		header = new Int32HeaderProvider();
 		checksum = new CRC32ChecksumProvider();
-		types = new TypeDictionary() {
+		types = new MessageTypeDictionary() {
 			
 			@Override
 			public int getId(Message msg) throws UnknownMessageException {
