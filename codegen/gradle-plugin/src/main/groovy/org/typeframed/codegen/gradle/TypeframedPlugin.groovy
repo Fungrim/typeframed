@@ -6,12 +6,12 @@ import org.gradle.api.Task;
 import org.gradle.api.internal.file.DefaultSourceDirectorySet
 import org.gradle.api.tasks.SourceSet;
 
-class TypeframePlugin implements Plugin<Project> {
+class TypeframedPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
 //		apply plugin: 'java'
-		project.convention.plugins.typeframe = new TypeframeConvention(project)
+		project.convention.plugins.typeframed = new TypeframedConvention(project)
 		project.sourceSets.all { SourceSet sourceSet ->
 			def generateJavaTaskName = sourceSet.getTaskName('generate', 'dictionary')
 			DictionaryCompile compileTask = project.tasks.create(generateJavaTaskName, DictionaryCompile)
