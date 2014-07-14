@@ -1,6 +1,6 @@
 apply plugin: 'license'
 apply plugin: 'maven'
-  
+
 group = 'org.typeframed'
 version = '0.1-SNAPSHOT'
 
@@ -13,15 +13,17 @@ buildscript {
   }
 }  
 
-license {
-  header rootProject.file('HEADER')
-  ext.year = Calendar.getInstance().get(Calendar.YEAR)
-  ext.copyHolder = 'Lars J. Nilsson <contact@larsan.net>'
-}
-
 subprojects {
+  apply plugin: 'license'
+  apply plugin: 'maven'
   apply plugin: 'java'
   apply plugin: 'eclipse'
+
+  license {
+    header rootProject.file('HEADER')
+    ext.year = Calendar.getInstance().get(Calendar.YEAR)
+    ext.copyHolder = 'Lars J. Nilsson <contact@larsan.net>'
+  }
 
   task javadocJar(type: Jar) {
     classifier = 'javadoc'
