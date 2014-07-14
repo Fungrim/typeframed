@@ -1,3 +1,6 @@
+apply plugin: 'license'
+apply plugin: 'maven'
+  
 group = 'org.typeframed'
 version = '0.1-SNAPSHOT'
 
@@ -17,11 +20,8 @@ license {
 }
 
 subprojects {
-
   apply plugin: 'java'
-  apply plugin: 'maven'
   apply plugin: 'eclipse'
-  apply plugin: 'license'
 
   task javadocJar(type: Jar) {
     classifier = 'javadoc'

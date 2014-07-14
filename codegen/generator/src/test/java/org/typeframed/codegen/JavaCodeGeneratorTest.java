@@ -17,6 +17,7 @@ public class JavaCodeGeneratorTest {
 		config.setOutputDir(new File("build/generate-test"));
 		config.setProtoFiles(new Source[] { new FileSource(new File("src/test/proto/echo.proto")) });
 		config.setIdOptionName("type_id");
+		config.setCodegenPackage("testpackage");
 		// config.getProperties().put(Config.JAVA_PACKAGE_NAME, "testpackage");
 		JavaCodeGenerator generator = new JavaCodeGenerator(config, new CodegenLogger() {
 			

@@ -12,6 +12,6 @@ class TestJavaAccess {
 	public void test() {
 		Config config = new Config()
 		config.setFailOnDuplicates(true)
-		new JavaCodeGenerator(config)
+		new JavaCodeGenerator(config, new ProjectLogger())
 	}
 }

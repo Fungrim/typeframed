@@ -160,7 +160,8 @@ public class JavaCodeGenerator implements CodeGenerator {
 
 	private String findPackageName(DictionaryParser parser, Config config) {
 		// TODO find package from protofile? but what if there are multiple files?
-		return config.getCodegenPackage();
+		String s = config.getCodegenPackage();
+		return s == null ? "" : s;
 	}
 
 	private void println(PrintWriter wr, String string) {
