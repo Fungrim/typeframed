@@ -3,6 +3,11 @@ package org.typeframed.api.digest;
 import java.security.MessageDigest;
 import java.util.zip.CRC32;
 
+/**
+ * A digest version of the CRC32 checksum provider.
+ *
+ * @author Lars J. Nilsson
+ */
 public class CRC32MessageDigest extends MessageDigest {
 
 	private CRC32 crc32;

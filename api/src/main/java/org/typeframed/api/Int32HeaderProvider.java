@@ -1,28 +1,25 @@
 package org.typeframed.api;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 
+/**
+ * This is a header provider for fixed size, 32 bit integers.
+ *
+ * @author Lars J. Nilsson
+ */
 public class Int32HeaderProvider implements HeaderProvider<Integer> {
 
 	@Override
 	public Integer fromBytes(byte[] bytes) {
-		try {
-			return new DataInputStream(new ByteArrayInputStream(bytes)).readInt();
-		} catch (IOException e) { 
-			throw new IllegalStateException(e);
-		}
+		ByteBuffer buffer = ByteBuffer.wrap(bytes);
+		return buffer.getInt();
 	}
 	
 	@Override
 	public byte[] toBytes(Integer head) throws IOException {
-		ByteArrayOutputStream ba = new ByteArrayOutputStream(4);
-		DataOutputStream dout = new DataOutputStream(ba);
-		dout.writeInt(head);
-		dout.flush();
-		return ba.toByteArray();
+		ByteBuffer buffer = ByteBuffer.allocate(4);
+		buffer.putInt(head);
+		return buffer.array();
 	}
 }

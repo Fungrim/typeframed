@@ -2,6 +2,11 @@ package org.typeframed.api.digest;
 
 import java.security.MessageDigest;
 
+/**
+ * This is the default CRC32 checksum provider.
+ *
+ * @author Lars J. Nilsson
+ */
 public class CRC32ChecksumProvider implements ChecksumProvider {
 
 	@Override

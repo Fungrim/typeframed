@@ -2,6 +2,11 @@ package org.typeframed.api.util;
 
 import java.security.MessageDigest;
 
+/**
+ * This is the digest version of /dev/null, it does nothing.
+ *
+ * @author Lars J. Nilsson
+ */
 public class NullDigest extends MessageDigest {
 
 	public static final MessageDigest INSTANCE = new NullDigest();
