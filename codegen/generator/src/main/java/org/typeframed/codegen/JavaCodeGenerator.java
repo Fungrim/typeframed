@@ -55,20 +55,20 @@ public class JavaCodeGenerator implements CodeGenerator {
 			println(wr, "import org.typeframed.api.util.TypeSwitch;");
 			println(wr, "import org.typeframed.api.util.TypeSwitch.Target;");
 			println(wr, "import org.typeframed.api.UnknownMessageException;");
-			println(wr, "import org.typeframed.api.TypeDictionary;");
+			println(wr, "import org.typeframed.api.MessageTypeDictionary;");
 			wr.println();
 			println(wr, "import com.google.protobuf.Message;");
 			wr.println();
 			println(wr, "public class " + SWITCH_CLASSNAME + " extends TypeSwitch {");
 			wr.println();
 			println(wr, "protected final " + HANDLER_CLASSNAME + " target;", 1);
-			println(wr, "protected final TypeDictionary dictionary;", 1);
+			println(wr, "protected final MessageTypeDictionary dictionary;", 1);
 			wr.println();
 			println(wr, "public " + SWITCH_CLASSNAME + "(" + HANDLER_CLASSNAME + " target) {", 1);
 			println(wr, "this(target, new " + DICTIONARY_CLASSNAME + "());", 2);
 			println(wr, "}", 1);
 			wr.println();
-			println(wr, "public " + SWITCH_CLASSNAME + "(" + HANDLER_CLASSNAME + " target, TypeDictionary dictionary) {", 1);
+			println(wr, "public " + SWITCH_CLASSNAME + "(" + HANDLER_CLASSNAME + " target, MessageTypeDictionary dictionary) {", 1);
 			println(wr, "this.dictionary = dictionary;", 2);
 			println(wr, "this.target = target;", 2);
 			println(wr, "}", 1);
@@ -111,7 +111,7 @@ public class JavaCodeGenerator implements CodeGenerator {
 		try (PrintWriter wr = createWriter(output)) {
 			writePackageHead(packageName, wr);
 			println(wr, "import org.typeframed.api.NoSuchTypeException;");
-			println(wr, "import org.typeframed.api.TypeDictionary;");
+			println(wr, "import org.typeframed.api.MessageTypeDictionary;");
 			println(wr, "import org.typeframed.api.UnknownMessageException;");
 			wr.println();
 			println(wr, "import com.google.protobuf.Message;");
@@ -119,7 +119,7 @@ public class JavaCodeGenerator implements CodeGenerator {
 			wr.println();
 			println(wr, "import java.lang.reflect.Method;");
 			wr.println();
-			println(wr, "public class " + DICTIONARY_CLASSNAME + " implements TypeDictionary {");
+			println(wr, "public class " + DICTIONARY_CLASSNAME + " implements MessageTypeDictionary {");
 			wr.println();
 			println(wr, "@Override", 1);
 			println(wr, "public int getId(Message msg) throws UnknownMessageException {", 1);
