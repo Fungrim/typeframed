@@ -1,6 +1,5 @@
 package org.typeframed.codegen;
 
-import org.apache.log4j.Logger;
 import org.typeframed.api.codegen.DuplicateIdException;
 import org.typeframed.api.codegen.MissingIdException;
 import org.typeframed.protobuf.parser.ErrorHandler;
@@ -12,23 +11,6 @@ public class ConfigErrorHandler implements ErrorHandler {
 	
 	private final CodegenLogger logger;
 
-	public ConfigErrorHandler(Config config) {
-		this(config, new CodegenLogger() {
-			
-			private final Logger log = Logger.getLogger(JavaCodeGenerator.class);
-			
-			@Override
-			public void warn(String msg) {
-				log.warn(msg);
-			}
-			
-			@Override
-			public void debug(String msg) {
-				log.debug(msg);
-			}
-		});
-	}
-	
 	public ConfigErrorHandler(Config config, CodegenLogger logger) {
 		this(config.isFailOnDuplicates(), config.isFailOnMissingId(), logger);
 	}

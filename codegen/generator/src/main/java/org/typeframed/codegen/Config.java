@@ -1,5 +1,7 @@
 package org.typeframed.codegen;
 
+import static org.apache.commons.lang3.builder.ToStringStyle.SHORT_PREFIX_STYLE;
+
 import java.io.File;
 import java.util.Properties;
 
@@ -9,16 +11,23 @@ import org.typeframed.protobuf.parser.Source;
 
 public class Config {
 	
-	public static final String JAVA_PACKAGE_NAME = "javaPackage";
-
 	private Source[] protoFiles;
 	private File outputDir;
 	private boolean failOnDuplicates = true;
 	private boolean failOnMissingId = false;
 	private String idOptionName;
+	private String codegenPackage;
 	
 	private final Properties properties = new Properties();
 
+	public String getCodegenPackage() {
+		return codegenPackage;
+	}
+	
+	public void setCodegenPackage(String codegenPackage) {
+		this.codegenPackage = codegenPackage;
+	}
+	
 	public boolean isFailOnDuplicates() {
 		return failOnDuplicates;
 	}
@@ -77,6 +86,6 @@ public class Config {
 	
 	@Override
 	public String toString() {
-		return ToStringBuilder.reflectionToString(this);
+		return ToStringBuilder.reflectionToString(this, SHORT_PREFIX_STYLE);
 	}
 }

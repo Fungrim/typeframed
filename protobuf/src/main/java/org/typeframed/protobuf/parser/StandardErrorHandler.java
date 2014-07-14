@@ -1,13 +1,12 @@
 package org.typeframed.protobuf.parser;
 
-import org.apache.log4j.Logger;
 import org.typeframed.api.codegen.DuplicateIdException;
 
 public class StandardErrorHandler implements ErrorHandler {
 
-	protected final Logger log;
+	private ParserLogger log;
 
-	public StandardErrorHandler(Logger log) {
+	public StandardErrorHandler(ParserLogger log) {
 		this.log = log;
 	}
 

@@ -4,7 +4,6 @@ import org.gradle.api.Project;
 
 import org.typeframed.codegen.CodegenLogger
 
-
 class ProjectLogger implements CodegenLogger {
 
 	private Project project;
@@ -20,6 +19,11 @@ class ProjectLogger implements CodegenLogger {
 
 	@Override
 	public void debug(String msg) {
+		project.logger.debug msg
+	}
+	
+	@Override
+	public void info(String msg) {
 		project.logger.debug msg
 	}
 }

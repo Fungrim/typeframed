@@ -20,19 +20,19 @@ public class StandardDictionaryParserTest {
 
 	@Test
 	public void testDictionaryParsing() throws Exception {
-		StandardDictionaryParser parser = new StandardDictionaryParser(new OptionInspector("type_id"));
+		StandardDictionaryParser parser = new StandardDictionaryParser(new OptionInspector("type_id"), new DummyLogger());
 		parser.parseClassMap(toSourceArray(new File("src/test/proto/hard.proto")));
 	}
 	
 	@Test(expected=DuplicateIdException.class)
 	public void testDuplicateId() throws Exception {
-		StandardDictionaryParser parser = new StandardDictionaryParser(new OptionInspector("type_id2"));
+		StandardDictionaryParser parser = new StandardDictionaryParser(new OptionInspector("type_id2"), new DummyLogger());
 		parser.parseClassMap(toSourceArray(new File("src/test/proto/duplicateid.proto")));
 	}
 	
 	@Test
 	public void testTypeDictionaryParsing() throws Exception {
-		StandardDictionaryParser parser = new StandardDictionaryParser(new OptionInspector("type_id"));
+		StandardDictionaryParser parser = new StandardDictionaryParser(new OptionInspector("type_id"), new DummyLogger());
 		MessageTypeDictionary dict = parser.parseDictionary(toSourceArray(new File("src/test/proto/echo.proto")));
 		assertEquals(1, dict.getId(EchoRequest.getDefaultInstance()));
 		assertEquals(2, dict.getId(EchoResponse.getDefaultInstance()));

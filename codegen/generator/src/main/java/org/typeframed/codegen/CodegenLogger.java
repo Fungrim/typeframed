@@ -1,9 +1,5 @@
 package org.typeframed.codegen;
 
-public interface CodegenLogger {
+import org.typeframed.protobuf.parser.ParserLogger;
 
-	public void warn(String msg);
-	
-	public void debug(String msg);
-	
-}
+public interface CodegenLogger extends ParserLogger { }

@@ -13,13 +13,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
 import org.parboiled.Parboiled;
 import org.parboiled.errors.ParseError;
 import org.parboiled.parserunners.ReportingParseRunner;
 import org.parboiled.support.ParsingResult;
-import org.typeframed.api.NoSuchTypeException;
 import org.typeframed.api.MessageTypeDictionary;
+import org.typeframed.api.NoSuchTypeException;
 import org.typeframed.api.UnknownMessageException;
 import org.typeframed.protobuf.parser.ParserError.Location;
 import org.typeframed.protobuf.parser.node.ExtendNode;
@@ -33,13 +32,15 @@ import com.google.protobuf.Message.Builder;
 
 public class StandardDictionaryParser implements DictionaryParser {
 	
-	private final Logger log = Logger.getLogger(getClass());
 	private MessageInspector inspector;
 	
 	private final ErrorHandler errorHandler;
+
+	private ParserLogger log;
 	
-	public StandardDictionaryParser(MessageInspector inspector, ErrorHandler errorHandler) {
+	public StandardDictionaryParser(MessageInspector inspector, ErrorHandler errorHandler, ParserLogger log) {
 		this.inspector = inspector;
+		this.log = log;
 		if(errorHandler == null) {
 			this.errorHandler = new StandardErrorHandler(log);
 		} else {
@@ -47,8 +48,8 @@ public class StandardDictionaryParser implements DictionaryParser {
 		}
 	}
 	
-	public StandardDictionaryParser(MessageInspector inspector) {
-		this(inspector, null);
+	public StandardDictionaryParser(MessageInspector inspector, ParserLogger log) {
+		this(inspector, null, log);
 	}
 	
 	@Override

@@ -26,19 +26,15 @@ public class JavaCodeGenerator implements CodeGenerator {
 	private final Config config;
 	private CodegenLogger logger;
 	
-	public JavaCodeGenerator(Config config) {
+	public JavaCodeGenerator(Config config, CodegenLogger logger) {
 		this.config = config;
-	}
-	
-	@Override
-	public void setCodegenLogger(CodegenLogger logger) {
 		this.logger = logger;
 	}
 
 	@Override
 	public void generate() throws IOException {
-		ErrorHandler handler = (logger == null ? new ConfigErrorHandler(config) : new ConfigErrorHandler(config, logger));
-		DictionaryParser parser = new StandardDictionaryParser(new OptionInspector(config.getIdOptionName()), handler);
+		ErrorHandler handler = new ConfigErrorHandler(config, logger);
+		DictionaryParser parser = new StandardDictionaryParser(new OptionInspector(config.getIdOptionName()), handler, logger);
 		Set<MessageDescriptor> descriptors = parser.parseMessageDescriptors(config.getProtoFiles());
 		String packageName = findPackageName(parser, config);
 		File outDir = getOutputDir(packageName, config);
@@ -164,7 +160,7 @@ public class JavaCodeGenerator implements CodeGenerator {
 
 	private String findPackageName(DictionaryParser parser, Config config) {
 		// TODO find package from protofile? but what if there are multiple files?
-		return config.getProperty(Config.JAVA_PACKAGE_NAME, "");
+		return config.getCodegenPackage();
 	}
 
 	private void println(PrintWriter wr, String string) {

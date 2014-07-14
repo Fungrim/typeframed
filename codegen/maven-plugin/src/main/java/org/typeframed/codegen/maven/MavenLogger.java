@@ -10,6 +10,11 @@ public class MavenLogger implements CodegenLogger {
 	public MavenLogger(Log logger) {
 		this.logger = logger;
 	}
+	
+	@Override
+	public void info(String arg0) {
+		logger.info(arg0);
+	}
 
 	@Override
 	public void debug(String arg0) {
