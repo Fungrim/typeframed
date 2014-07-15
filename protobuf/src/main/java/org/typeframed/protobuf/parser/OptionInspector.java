@@ -17,7 +17,6 @@ package org.typeframed.protobuf.parser;
 
 import org.typeframed.protobuf.parser.node.MessageNode;
 
-
 public class OptionInspector implements MessageInspector {
 
 	private final String optionName;

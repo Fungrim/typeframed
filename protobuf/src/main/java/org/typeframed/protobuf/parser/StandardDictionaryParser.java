@@ -41,18 +41,29 @@ import org.typeframed.protobuf.parser.node.FieldNode;
 import org.typeframed.protobuf.parser.node.MessageNode;
 import org.typeframed.protobuf.parser.node.RootNode;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.io.CharStreams;
 import com.google.protobuf.Message;
 import com.google.protobuf.Message.Builder;
 
+/**
+ * This is the main dictionary parser. It uses a {@link ProtobufParser}
+ * to do the heavy lifting and inspects the resulting node tree to find
+ * ID's and packages. 
+ *
+ * @author Lars J. Nilsson
+ */
 public class StandardDictionaryParser implements DictionaryParser {
 	
-	private MessageInspector inspector;
-	
+	private final MessageInspector inspector;
 	private final ErrorHandler errorHandler;
-
-	private ParserLogger log;
+	private final ParserLogger log;
 	
+	/**
+	 * @param inspector Message inspector, must not be null
+	 * @param errorHandler Error handler, if null will use the logger
+	 * @param log Logger, must not be null
+	 */
 	public StandardDictionaryParser(MessageInspector inspector, ErrorHandler errorHandler, ParserLogger log) {
 		this.inspector = inspector;
 		this.log = log;
@@ -63,6 +74,10 @@ public class StandardDictionaryParser implements DictionaryParser {
 		}
 	}
 	
+	/**
+	 * @param inspector Message inspector, must not be null
+	 * @param log Logger, must not be null
+	 */
 	public StandardDictionaryParser(MessageInspector inspector, ParserLogger log) {
 		this(inspector, null, log);
 	}
@@ -108,8 +123,20 @@ public class StandardDictionaryParser implements DictionaryParser {
 	}
 	
 	@Override
+	public Set<MessageDescriptor> parseMessageDescriptors(Source[] protoFiles) throws IOException {
+		Map<Integer, MessageDescriptor> map = new HashMap<Integer, MessageDescriptor>();
+		for (Source f : protoFiles) {
+			parse(f, map);
+		}
+		return new HashSet<MessageDescriptor>(map.values());
+	}
+
+	
+	// --- PRIVATE METHODS --- //
+
+	@VisibleForTesting
 	@SuppressWarnings("unchecked")
-	public Map<Integer, Class<? extends Message>> parseClassMap(Source[] protoFiles) throws IOException, ClassNotFoundException {
+	Map<Integer, Class<? extends Message>> parseClassMap(Source[] protoFiles) throws IOException, ClassNotFoundException {
 		Set<MessageDescriptor> set = parseMessageDescriptors(protoFiles);
 		Map<Integer, Class<? extends Message>> map = new HashMap<Integer, Class<? extends Message>>();
 		for (MessageDescriptor desc : set) {
@@ -119,15 +146,6 @@ public class StandardDictionaryParser implements DictionaryParser {
 		return map;
 	}
 	
-	@Override
-	public Set<MessageDescriptor> parseMessageDescriptors(Source[] protoFiles) throws IOException {
-		Map<Integer, MessageDescriptor> map = new HashMap<Integer, MessageDescriptor>();
-		for (Source f : protoFiles) {
-			parse(f, map);
-		}
-		return new HashSet<MessageDescriptor>(map.values());
-	}
-
 	@SuppressWarnings("rawtypes")
 	private void parse(Source f, Map<Integer, MessageDescriptor> map) throws IOException {
 		ProtobufParser parser = Parboiled.createParser(ProtobufParser.class);

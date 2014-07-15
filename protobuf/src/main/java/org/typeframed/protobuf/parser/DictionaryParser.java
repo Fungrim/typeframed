@@ -16,19 +16,31 @@
 package org.typeframed.protobuf.parser;
 
 import java.io.IOException;
-import java.util.Map;
 import java.util.Set;
 
 import org.typeframed.api.MessageTypeDictionary;
 
-import com.google.protobuf.Message;
-
 public interface DictionaryParser {
 	
+	/**
+	 * Generate a type dictionary from a set of source files. 
+	 * 
+	 * @param protoFiles Source files, never null
+	 * @return A type dictionary mapping ID to types, never null
+	 * @throws IOException On IO errors
+	 * @throws ClassNotFoundException
+	 */
 	public MessageTypeDictionary parseDictionary(Source[] protoFiles) throws IOException, ClassNotFoundException;
 	
-	public Map<Integer, Class<? extends Message>> parseClassMap(Source[] protoFiles) throws IOException, ClassNotFoundException;
-	
+	/**
+	 * Parse a set of message descriptors from a set of source files. This
+	 * is what the code generators will use in order to correctly handle the
+	 * message types.
+	 * 
+	 * @param protoFiles Source files, never null
+	 * @return A set of message descriptors, never null
+	 * @throws IOException On IO errors
+	 */
 	public Set<MessageDescriptor> parseMessageDescriptors(Source[] protoFiles) throws IOException;
 	
 }
