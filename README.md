@@ -174,8 +174,8 @@ buildscript {
     mavenCentral()
   }
   dependencies {
-    classpath 'org.typeframed:typeframed-codegen-generator:0.1-SNAPSHOT'
-    classpath 'org.typeframed:typeframed-codegen-gradle-plugin:0.1-SNAPSHOT'
+    classpath 'org.typeframed:typeframed-codegen-generator:1.0.0'
+    classpath 'org.typeframed:typeframed-codegen-gradle-plugin:1.0.0'
   }
 }
 
@@ -185,7 +185,7 @@ typeframed {
 
 dependencies {
   compile 'com.google.protobuf:protobuf-java:2.5.0'
-  compile 'org.typeframed:typeframed-api:0.1-SNAPSHOT'
+  compile 'org.typeframed:typeframed-api:1.0.0'
 }
 ```
 
