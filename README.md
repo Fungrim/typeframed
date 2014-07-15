@@ -76,6 +76,7 @@ There are two plugins available for Gradle and Maven. Both will generate the sam
 Here's a simple example of our *hello world* protocol. Notice that it extends the *JavaTypeSwitchTarget*  which have been generated - that way you will never forget protocol changes as your code will stop compiling until you repair it. 
 
 ```
+#!java
 public class Handler extends JavaTypeSwitchTarget {
 
     @Override
@@ -90,6 +91,7 @@ public class Handler extends JavaTypeSwitchTarget {
 Given this, we can now read and handle messages using the Typeframed API:
 
 ```
+#!java
 public void readMsg() throws IOException {
     // get input stream
     InputStream in = getInputStream();
@@ -106,3 +108,34 @@ public void readMsg() throws IOException {
     typeSwitch.forward(envelope.getMessage());
 }
 ```
+
+### Maven Plugin ###
+You will need a protoc plugin to compile your protocol files. After that you need a Typeframed dependency:
+
+```
+<dependency>
+  <groupId>org.typeframed</groupId>
+  <artifactId>typeframed-api</artifactId>
+  <version>1.0.0</version>
+</dependency>
+```
+
+Then add the Typeframed plugin (after the protoc plugin):
+
+```
+<plugin>
+  <artifactId>typeframed-codegen-maven-plugin</artifactId>
+  <groupId>org.typeframed</groupId>
+  <version>1.0.0</version>
+  <configuration>
+    <protocolFile>src/main/proto/test.proto</protocolFile>
+<javaPackage>org.typeframed.test</javaPackage>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
