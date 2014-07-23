@@ -21,6 +21,8 @@ import static org.junit.Assert.assertNull;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
+import junit.framework.Assert;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.typeframed.api.Envelope;
@@ -62,6 +64,23 @@ public class StreamTest {
 				}
 			}
 		};
+	}
+	
+	@Test
+	public void testSimpleMultiple() throws Exception {
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		StreamWriter<Void> writer = new StreamWriter<Void>(types, out);
+		for (int i = 0; i < 5; i++) {
+			Tell msg = Tell.newBuilder().setMsg(String.valueOf(i)).build();
+			writer.write(new Envelope<Void>(null, msg));
+		}
+		ByteArrayInputStream in = new ByteArrayInputStream(out.toByteArray());
+		StreamReader<Void> reader = new StreamReader<Void>(types, in);
+		for (int i = 0; i < 5; i++) {
+			Envelope<Void> env = reader.read();
+			Tell tell = (Tell) env.getMessage();
+			Assert.assertEquals(i, Integer.parseInt(tell.getMsg()));
+		}
 	}
 	
 	@Test
