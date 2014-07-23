@@ -1,5 +1,7 @@
 # Gradle Plugin #
 
+## Usage ##
+
 This is the Typeframed Gradle plugin. As with the maven plugin you will also need a protoc plugin to compile your protocol classes. Below is an extract from a gradle build file containing only the Typeframed sections:
 
 ```

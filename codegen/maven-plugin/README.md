@@ -1,5 +1,7 @@
 # Maven Plugin #
 
+## Usage ##
+
 This is the Typeframed Maven plugin. You will need a protoc plugin to compile your protocol files. After that you need a Typeframed dependency:
 
 ```

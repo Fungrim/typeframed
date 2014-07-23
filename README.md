@@ -8,6 +8,13 @@ Welcome to Typeframed, a protocol, API, plugins and code generators for polomorp
 
 Currently the code generation and API is Java only, but we're looking at Python, Go and JavaScript down the road.
 
+# Download #
+Typeframed is in the central Maven repository. If for some reason you do not do Maven-style dependencies you can download releases from the URL below:
+
+```
+http://central.maven.org/maven2/org/typeframed/
+``
+
 # Building #
 You need Gradle and Java 7 to build. 
 
