@@ -13,7 +13,7 @@ Typeframed is in the central Maven repository. If for some reason you do not do 
 
 ```
 http://central.maven.org/maven2/org/typeframed/
-``
+```
 
 # Building #
 You need Gradle and Java 7 to build. 
@@ -24,14 +24,13 @@ cd typeframed
 gradle build
 ```
 
-The above buils everything except the Maven plugin. To build that you need to install
-from Gradle and then buid the plugin with Maven:
+The above builds everything except the Maven plugin. To build that you need to install from Gradle and then buid the plugin with Maven:
 
 ```
 gradle install
 cd codegen/maven-plugin 
 mvn package
-``
+```
 
 # Wire Protocol #
 The wire protocol wraps each protobuf message in an envelope containing an optional header field and an equally optional checksum. 
