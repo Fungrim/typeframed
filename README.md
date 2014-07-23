@@ -1,12 +1,18 @@
 # Typeframed #
 Welcome to Typeframed, a protocol, API, plugins and code generators for polomorphic protobuf streaming. That's quite a mouthful, let's break it down. 
 
-* Typeframed introduces a wire protocol for determining type and message length of protobuf messages. It also adds an optional header and checksum per message.  
-* There is an API for handling protobuf messages in runtime, including utilities for writing them off/on streams and byte buffers.
-* Typeframed contains a build time code generator that will parse a protobuf file to determine message ID's and generate code to help with polymorphism.
-* There are also plugins for various build systems to run the above code generation.
+Typeframed introduces a wire protocol for determining type and message length of protobuf messages. It also adds an optional header and checksum per message.  
+
+There is an API for handling protobuf messages in runtime, including utilities for writing them off/on streams and byte buffers.
+
+Typeframed contains a build time code generator that will parse a protobuf file to determine message ID's and generate code to help with polymorphism.
+
+There are also plugins for various build systems to run the above code generation.
 
 Currently the code generation and API is Java only, but we're looking at Python, Go and JavaScript down the road.
+
+## When Do You Need This? ##
+You can use Typeframed anytime you which to stream multiple Protobuf message types to a single source, and have the ability to read them in a type-safe manner. Eg. saving data to disc, writing a socket server, etc.
 
 # Download #
 Typeframed is in the central Maven repository. If for some reason you do not do Maven-style dependencies you can download releases from the URL below:
