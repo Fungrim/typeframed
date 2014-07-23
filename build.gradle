@@ -1,9 +1,6 @@
 apply plugin: 'license'
 apply plugin: 'maven'
 
-group = 'org.typeframed'
-version = '0.1-SNAPSHOT'
-
 buildscript {
   repositories {
     mavenCentral()
@@ -14,15 +11,24 @@ buildscript {
 }  
 
 subprojects {
+
   apply plugin: 'license'
   apply plugin: 'maven'
   apply plugin: 'java'
   apply plugin: 'eclipse'
+  apply plugin: 'signing'
+  
+  group = 'org.typeframed'
+  version = '0.1-SNAPSHOT'
 
   license {
     header rootProject.file('HEADER')
     ext.year = Calendar.getInstance().get(Calendar.YEAR)
     ext.copyHolder = 'Lars J. Nilsson <contact@larsan.net>'
+  }
+  
+  signing {
+    sign configurations.archives
   }
 
   task javadocJar(type: Jar) {
@@ -58,6 +64,83 @@ subprojects {
   eclipse {
     classpath {
       defaultOutputDir = file("${projectDir}/build/eclipse")
+    }
+  }
+  
+  install {
+    repositories.mavenInstaller {
+      pom.project {
+      
+        name 'Typeframed'
+        description 'A library for polymorphic protobuf streaming.'
+        url 'https://bitbucket.org/fungrim/typeframed'
+
+        scm {
+          connection 'scm:hg:https://bitbucket.org/fungrim/typeframed'
+          developerConnection 'scm:hg:https://bitbucket.org/fungrim/typeframed'
+          url 'https://bitbucket.org/fungrim/typeframed'
+        }
+
+        licenses {
+          license {
+            name 'The Apache Software License, Version 2.0'
+            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+          }
+        }
+
+        developers {
+          developer {
+            id 'ljn'
+            name 'Lars J. Nilsson'
+            email 'contact@larsan.net'
+          }
+        }
+      }
+    }
+  }
+  
+  uploadArchives {
+    repositories {
+      mavenDeployer {
+    
+        beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+        repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+          authentication(userName: ossrhUsername, password: ossrhPassword)
+        }
+
+        snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+          authentication(userName: ossrhUsername, password: ossrhPassword)
+        }
+
+        pom.project {
+      
+          name 'Typeframed'
+          description 'A library for polymorphic protobuf streaming.'
+          url 'https://bitbucket.org/fungrim/typeframed'
+
+          scm {
+            connection 'scm:hg:https://bitbucket.org/fungrim/typeframed'
+            developerConnection 'scm:hg:https://bitbucket.org/fungrim/typeframed'
+            url 'https://bitbucket.org/fungrim/typeframed'
+          }
+
+          licenses {
+            license {
+              name 'The Apache Software License, Version 2.0'
+              url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+            }
+          }
+
+          developers {
+            developer {
+              id 'ljn'
+              name 'Lars J. Nilsson'
+              email 'contact@larsan.net'
+            }
+          }
+        }
+      }
     }
   }
 }
