@@ -8,6 +8,24 @@ Welcome to Typeframed, a protocol, API, plugins and code generators for polomorp
 
 Currently the code generation and API is Java only, but we're looking at Python, Go and JavaScript down the road.
 
+# Building #
+You need Gradle and Java 7 to build. 
+
+```
+hg clone https://bitbucket.org/fungrim/typeframed
+cd typeframed
+gradle build
+```
+
+The above buils everything except the Maven plugin. To build that you need to install
+from Gradle and then buid the plugin with Maven:
+
+```
+gradle install
+cd codegen/maven-plugin 
+mvn package
+``
+
 # Wire Protocol #
 The wire protocol wraps each protobuf message in an envelope containing an optional header field and an equally optional checksum. 
 
