@@ -19,7 +19,7 @@ subprojects {
   apply plugin: 'signing'
   
   group = 'org.typeframed'
-  version = '0.1-SNAPSHOT'
+  version = '1.0.0'
 
   license {
     header rootProject.file('HEADER')
