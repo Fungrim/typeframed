@@ -1,5 +1,5 @@
 # Typeframed #
-Welcome to Typeframed, a protocol, API, plugins and code generators for polomorphic protobuf streaming. That's quite a mouthful, let's break it down. 
+Welcome to Typeframed, a protocol, API, plugin and code generators for polomorphic protobuf streaming. 
 
 1. Typeframed introduces a wire protocol for determining type and message length of protobuf messages. It also adds an optional header and checksum per message.  
 
