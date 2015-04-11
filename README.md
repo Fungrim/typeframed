@@ -221,6 +221,10 @@ dependencies {
 
 # Release Notes #
 
+## 1.1.0 #
+
+ * Adding reader and writer for byte buffers
+
 ## 1.0.0 #
 
  * First release.
