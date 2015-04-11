@@ -23,49 +23,12 @@ import java.io.ByteArrayOutputStream;
 
 import junit.framework.Assert;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.typeframed.api.Envelope;
-import org.typeframed.api.HeaderProvider;
-import org.typeframed.api.Int32HeaderProvider;
-import org.typeframed.api.MessageTypeDictionary;
 import org.typeframed.api.Msg.Tell;
-import org.typeframed.api.NoSuchTypeException;
-import org.typeframed.api.UnknownMessageException;
-import org.typeframed.api.digest.CRC32ChecksumProvider;
-import org.typeframed.api.digest.ChecksumProvider;
 
-import com.google.protobuf.Message;
-import com.google.protobuf.Message.Builder;
+public class StreamTest extends BaseParseTest {
 
-public class StreamTest {
-
-	private MessageTypeDictionary types;
-	private ChecksumProvider checksum;
-	private HeaderProvider<Integer> header;
-	
-	@Before
-	public void setup() throws Exception {
-		header = new Int32HeaderProvider();
-		checksum = new CRC32ChecksumProvider();
-		types = new MessageTypeDictionary() {
-			
-			@Override
-			public int getId(Message msg) throws UnknownMessageException {
-				return 666;
-			}
-			
-			@Override
-			public Builder getBuilderForId(int id) throws NoSuchTypeException {
-				if(id != 666) {
-					throw new NoSuchTypeException(id);
-				} else {
-					return Tell.newBuilder();
-				}
-			}
-		};
-	}
-	
 	@Test
 	public void testSimpleMultiple() throws Exception {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();

@@ -40,6 +40,14 @@ public class Envelope<H> {
 		this.message = message;
 	}
 
+	
+	/**
+	 * @param msg Message to use, should nto be null
+	 */
+	public Envelope(Message msg) {
+		this(null, msg);
+	}
+
 	public H getHeader() {
 		return header;
 	}
