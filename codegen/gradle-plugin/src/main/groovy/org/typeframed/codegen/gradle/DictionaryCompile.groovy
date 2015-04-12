@@ -27,6 +27,7 @@ import org.gradle.api.tasks.compile.AbstractCompile;
 
 class DictionaryCompile extends AbstractCompile {
 
+    @TaskAction
 	public void compile() {
 		TypeframedConvention conf = project.convention.plugins.typeframed
 		logger.debug "DictionaryCompile using properties: failOnDuplicates=${conf.failOnDuplicates}; failOnMissingId=${conf.failOnMissingId}; codegenPackage=${conf.codegenPackage}; typeIdName=${conf.typeIdName}"

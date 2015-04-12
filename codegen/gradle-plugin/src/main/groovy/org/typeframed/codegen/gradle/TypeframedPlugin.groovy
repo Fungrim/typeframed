@@ -25,13 +25,11 @@ class TypeframedPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
-//		apply plugin: 'java'
 		project.convention.plugins.typeframed = new TypeframedConvention(project)
 		project.sourceSets.all { SourceSet sourceSet ->
 			def generateJavaTaskName = sourceSet.getTaskName('generate', 'dictionary')
 			DictionaryCompile compileTask = project.tasks.create(generateJavaTaskName, DictionaryCompile)
 			configureForSourceSet(project, sourceSet, compileTask)
-//			sourceSet.java.srcDir getGeneratedSourceDir(project, sourceSet)
 			String compileJavaTaskName = sourceSet.getCompileTaskName("java");
 			Task compileJavaTask = project.tasks.getByName(compileJavaTaskName);
 			compileJavaTask.dependsOn(compileTask)

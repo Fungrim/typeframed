@@ -54,6 +54,7 @@ subprojects {
   }
 
   ext.libraries = [
+    protobufplugin:'ws.antonov.gradle.plugins:gradle-plugin-protobuf:0.9.1',
     protobuf:'com.google.protobuf:protobuf-java:2.5.0',
     guava:'com.google.guava:guava:14.0.1',
     junit:'junit:junit:4.10',
