@@ -221,6 +221,10 @@ dependencies {
 
 # Release Notes #
 
+## 1.2.0 ##
+
+ * Upgrading to Gradle 2.x
+
 ## 1.1.0 #
 
  * Adding reader and writer for byte buffers
