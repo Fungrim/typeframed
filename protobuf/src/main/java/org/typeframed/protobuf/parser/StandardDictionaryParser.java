@@ -35,7 +35,7 @@ import org.parboiled.support.ParsingResult;
 import org.typeframed.api.MessageTypeDictionary;
 import org.typeframed.api.NoSuchTypeException;
 import org.typeframed.api.UnknownMessageException;
-import org.typeframed.protobuf.parser.ParserError.Location;
+import org.typeframed.protobuf.parser.ParserError.Error;
 import org.typeframed.protobuf.parser.node.ExtendNode;
 import org.typeframed.protobuf.parser.node.FieldNode;
 import org.typeframed.protobuf.parser.node.MessageNode;
@@ -229,11 +229,15 @@ public class StandardDictionaryParser implements DictionaryParser {
 	}
 
 	@SuppressWarnings("rawtypes")
-	private Location[] toStartLocations(List parseErrors) {
-		Location[] arr = new Location[parseErrors.size()];
+	private Error[] toStartLocations(List parseErrors) {
+		Error[] arr = new Error[parseErrors.size()];
 		for (int i = 0; i < arr.length; i++) {
 			ParseError er = (ParseError) parseErrors.get(i);
-			arr[i] = new Location(er.getStartIndex());
+			String msg = er.getErrorMessage();
+			if(msg == null) {
+				msg = er.getClass().getSimpleName();
+			}
+			arr[i] = new Error(msg, er.getStartIndex(), er.getEndIndex());
 		}
 		return arr;
 	}

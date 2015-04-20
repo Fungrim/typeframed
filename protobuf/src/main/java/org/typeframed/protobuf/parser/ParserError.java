@@ -15,24 +15,39 @@
  */
 package org.typeframed.protobuf.parser;
 
+import java.util.Arrays;
+
 public class ParserError extends RuntimeException {
 	
-	public static class Location {
-		public final int index;
-		public Location(int index) {
-			this.index = index;
+	public static class Error {
+		public final int startIndex;
+		public final String msg; 
+		public final int endIndex;
+		public Error(String msg, int startIndex, int endIndex) {
+			this.msg = msg;
+			this.startIndex = startIndex;
+			this.endIndex = endIndex;
+		}
+		@Override
+		public String toString() {
+			return "Message: " + msg + " (location: " + startIndex + "->" + endIndex + ")";
 		}
 	}
 
 	private static final long serialVersionUID = 7024966705801752310L;
 	
-	private Location[] indexes;
+	private Error[] indexes;
 
-	public ParserError(Location[] indexes) {
+	public ParserError(Error[] indexes) {
+		super(toMessage(indexes));
 		this.indexes = indexes;	
 	}
 	
-	public Location[] getIndexes() {
+	private static String toMessage(Error[] indexes) {
+		return Arrays.toString(indexes);
+	}
+
+	public Error[] getIndexes() {
 		return indexes;
 	}
 }
