@@ -15,7 +15,7 @@ Currently the code generation and API is Java only, but we're looking at Python,
 You can use Typeframed anytime you which to stream multiple Protobuf message types to a single source, and have the ability to read them in a type-safe manner. Eg. saving data to disc, writing a socket server, etc.
 
 # Download #
-Typeframed is in the central Maven repository. If for some reason you do not do Maven-style dependencies you can download releases from the URL below:
+Typeframed is in the [central Maven repository](http://search.maven.org/#search%7Cga%7C1%7Ctypeframed). If for some reason you do not do Maven-style dependencies you can download releases from the URL below:
 
 ```
 http://central.maven.org/maven2/org/typeframed/
