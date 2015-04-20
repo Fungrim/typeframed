@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.typeframed</groupId>
 	<artifactId>typeframed-codegen-maven-plugin</artifactId>
-	<version>1.2.1-SNAPSNOT</version>
+	<version>1.2.1</version>
 	<packaging>maven-plugin</packaging>
 	<description>A library for polymorphic protobuf streaming.</description>
 	<name>Typeframed Maven Plugin</name>
@@ -51,7 +51,7 @@
 		<dependency>
 			<groupId>org.typeframed</groupId>
 			<artifactId>typeframed-codegen-generator</artifactId>
-			<version>1.2.1-SNAPSHOT</version>
+			<version>1.2.1</version>
 		</dependency>
 	</dependencies>
 	<build>

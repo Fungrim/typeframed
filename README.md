@@ -221,6 +221,10 @@ dependencies {
 
 # Release Notes #
 
+## 1.2.1 ##
+
+ * Making parser errors visible in ocde generation by default
+
 ## 1.2.0 ##
 
  * Upgrading to Gradle 2.x
