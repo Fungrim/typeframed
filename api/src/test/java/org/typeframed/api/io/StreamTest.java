@@ -19,7 +19,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.util.Arrays;
 
 import junit.framework.Assert;
 
@@ -38,7 +37,6 @@ public class StreamTest extends BaseParseTest {
 		//writer.setHeaderProvider(header);
 		writer.write(new Envelope<Integer>(1, msg));
 		byte[] bytes = out.toByteArray();
-		//System.out.println(Arrays.toString(bytes));
 		ByteArrayInputStream in = new ByteArrayInputStream(bytes);
 		StreamReader<Integer> reader = new StreamReader<Integer>(types, in);
 		//reader.setChecksumProvider(checksum);
@@ -56,7 +54,14 @@ public class StreamTest extends BaseParseTest {
 		//writer.setHeaderProvider(header);
 		writer.write(new Envelope<Integer>(1, msg));
 		byte[] bytes = out.toByteArray();
-		System.out.println(Arrays.toString(bytes));
+		System.out.print("K: ");
+//		for (int i = 0; i < bytes.length; i++) {
+//			System.out.print("" + (bytes[i] & 0xFF));
+//			if (i + 1 < bytes.length) {
+//				System.out.print(", ");
+//			}
+//		}
+//		System.out.println("");
 		ByteArrayInputStream in = new ByteArrayInputStream(bytes);
 		StreamReader<Integer> reader = new StreamReader<Integer>(types, in);
 		reader.setChecksumProvider(checksum);

@@ -15,22 +15,15 @@
  */
 package org.typeframed.codegen;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Set;
 
 import org.typeframed.protobuf.parser.DictionaryParser;
-import org.typeframed.protobuf.parser.ErrorHandler;
 import org.typeframed.protobuf.parser.MessageDescriptor;
-import org.typeframed.protobuf.parser.OptionInspector;
-import org.typeframed.protobuf.parser.StandardDictionaryParser;
 
-import com.google.common.io.Files;
-
-public class JavaCodeGenerator implements CodeGenerator {
+public class JavaCodeGenerator extends BaseCodeGenerator {
 
 	private static final String TAB = "    ";
 
@@ -38,30 +31,19 @@ public class JavaCodeGenerator implements CodeGenerator {
 	private static final String HANDLER_CLASSNAME = "JavaTypeSwitchTarget";
 	private static final String SWITCH_CLASSNAME = "JavaTypeSwitch";
 	
-	private final Config config;
-	private CodegenLogger logger;
-	
 	public JavaCodeGenerator(Config config, CodegenLogger logger) {
-		this.config = config;
-		this.logger = logger;
+		super(config, logger);
 	}
-
+	
 	@Override
-	public void generate() throws IOException {
-		ErrorHandler handler = new ConfigErrorHandler(config, logger);
-		DictionaryParser parser = new StandardDictionaryParser(new OptionInspector(config.getIdOptionName()), handler, logger);
-		Set<MessageDescriptor> descriptors = parser.parseMessageDescriptors(config.getProtoFiles());
-		String packageName = findPackageName(parser, config);
-		File outDir = getOutputDir(packageName, config);
+	protected void generate(DictionaryParser parser, Set<MessageDescriptor> descriptors, File outDir, String packageName) throws IOException {
 		generateDictionary(parser, descriptors, outDir, packageName);
 		generateSwitch(parser, descriptors, outDir, packageName);
 		generateHandler(parser, descriptors, outDir, packageName);
 	}
 
 	private void generateSwitch(DictionaryParser parser, Set<MessageDescriptor> descriptors, File dir, String packageName) throws IOException {
-		File output = new File(dir, getSwitchFileName());
-		Files.createParentDirs(output);
-		try (PrintWriter wr = createWriter(output)) {
+		try (PrintWriter wr = openFile(new File(dir, getSwitchFileName()))) {
 			writePackageHead(packageName, wr);
 			println(wr, "import org.typeframed.api.util.TypeSwitch;");
 			println(wr, "import org.typeframed.api.util.TypeSwitch.Target;");
@@ -100,9 +82,7 @@ public class JavaCodeGenerator implements CodeGenerator {
 	}
 	
 	private void generateHandler(DictionaryParser parser, Set<MessageDescriptor> descriptors, File dir, String packageName) throws IOException {
-		File output = new File(dir, getHandleFileName());
-		Files.createParentDirs(output);
-		try (PrintWriter wr = createWriter(output)) {
+		try (PrintWriter wr = openFile(new File(dir, getHandleFileName()))) {
 			writePackageHead(packageName, wr);
 			println(wr, "import org.typeframed.api.util.TypeSwitch.Target;");
 			wr.println();
@@ -117,9 +97,7 @@ public class JavaCodeGenerator implements CodeGenerator {
 	}
 
 	private void generateDictionary(DictionaryParser parser, Set<MessageDescriptor> descriptors, File dir, String packageName) throws IOException {
-		File output = new File(dir, getDictionaryFileName());
-		Files.createParentDirs(output);
-		try (PrintWriter wr = createWriter(output)) {
+		try (PrintWriter wr = openFile(new File(dir, getDictionaryFileName()))) {
 			writePackageHead(packageName, wr);
 			println(wr, "import org.typeframed.api.NoSuchTypeException;");
 			println(wr, "import org.typeframed.api.MessageTypeDictionary;");
@@ -173,12 +151,6 @@ public class JavaCodeGenerator implements CodeGenerator {
 		}
 	}
 
-	private String findPackageName(DictionaryParser parser, Config config) {
-		// TODO find package from protofile? but what if there are multiple files?
-		String s = config.getCodegenPackage();
-		return s == null ? "" : s;
-	}
-
 	private void println(PrintWriter wr, String string) {
 		println(wr, string, 0);
 	}
@@ -188,10 +160,6 @@ public class JavaCodeGenerator implements CodeGenerator {
 			wr.print(TAB);
 		}
 		wr.println(string);
-	}
-
-	private PrintWriter createWriter(File output) throws IOException {
-		return new PrintWriter(new BufferedWriter(new FileWriter(output)));
 	}
 
 	private String getDictionaryFileName() {
@@ -204,14 +172,5 @@ public class JavaCodeGenerator implements CodeGenerator {
 	
 	private String getHandleFileName() {
 		return HANDLER_CLASSNAME + ".java";
-	}
-
-	private File getOutputDir(String packageName, Config config) {
-		String javaDir = packageName.replace('.', File.separatorChar);
-		if(javaDir.length() > 0) {
-			return new File(config.getOutputDir(), javaDir);
-		} else {
-			return config.getOutputDir();
-		}
 	}
 }
