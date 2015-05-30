@@ -45,11 +45,15 @@ public class CRC32MessageDigest extends MessageDigest {
 	@Override
 	protected byte[] engineDigest() {
 		long val = crc32.getValue();
-		byte[] arr = new byte[4];
-		arr[0] = (byte)(val >>> 24);
-		arr[1] = (byte)(val >>> 16);
-		arr[2] = (byte)(val >>>  8);
-		arr[3] = (byte)(val >>>  0);
+		byte[] arr = new byte[8];
+		arr[0] = (byte)(val >>> 56);
+		arr[1] = (byte)(val >>> 48);
+		arr[2] = (byte)(val >>> 40);
+		arr[3] = (byte)(val >>> 32);
+		arr[4] = (byte)(val >>> 24);
+		arr[5] = (byte)(val >>> 16);
+		arr[6] = (byte)(val >>>  8);
+		arr[7] = (byte)(val >>>  0);
 		return arr;
 	}
 

@@ -16,10 +16,10 @@
 package org.typeframed.api.io;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.util.Arrays;
 
 import junit.framework.Assert;
 
@@ -28,6 +28,42 @@ import org.typeframed.api.Envelope;
 import org.typeframed.api.Msg.Tell;
 
 public class StreamTest extends BaseParseTest {
+	
+	@Test
+	public void testSimple() throws Exception {
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		Tell msg = Tell.newBuilder().setMsg("Hello World!").build();
+		StreamWriter<Integer> writer = new StreamWriter<Integer>(types, out);
+		//writer.setChecksumProvider(checksum);
+		//writer.setHeaderProvider(header);
+		writer.write(new Envelope<Integer>(1, msg));
+		byte[] bytes = out.toByteArray();
+		//System.out.println(Arrays.toString(bytes));
+		ByteArrayInputStream in = new ByteArrayInputStream(bytes);
+		StreamReader<Integer> reader = new StreamReader<Integer>(types, in);
+		//reader.setChecksumProvider(checksum);
+		//reader.setHeaderProvider(header);
+		Envelope<Integer> env = reader.read();
+		assertEquals(msg.getMsg(), ((Tell)env.getMessage()).getMsg());
+	}
+	
+	@Test
+	public void testSimpleWithChecksum() throws Exception {
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		Tell msg = Tell.newBuilder().setMsg("Hello World!").build();
+		StreamWriter<Integer> writer = new StreamWriter<Integer>(types, out);
+		writer.setChecksumProvider(checksum);
+		//writer.setHeaderProvider(header);
+		writer.write(new Envelope<Integer>(1, msg));
+		byte[] bytes = out.toByteArray();
+		System.out.println(Arrays.toString(bytes));
+		ByteArrayInputStream in = new ByteArrayInputStream(bytes);
+		StreamReader<Integer> reader = new StreamReader<Integer>(types, in);
+		reader.setChecksumProvider(checksum);
+		//reader.setHeaderProvider(header);
+		Envelope<Integer> env = reader.read();
+		assertEquals(msg.getMsg(), ((Tell)env.getMessage()).getMsg());
+	}
 
 	@Test
 	public void testSimpleMultiple() throws Exception {
@@ -49,7 +85,7 @@ public class StreamTest extends BaseParseTest {
 	@Test
 	public void testMessageWithHeaderAndChecksum() throws Exception {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		Tell msg = Tell.newBuilder().setMsg("hello worlds").build();
+		Tell msg = Tell.newBuilder().setMsg("Hello World!").build();
 		StreamWriter<Integer> writer = new StreamWriter<Integer>(types, out);
 		writer.setChecksumProvider(checksum);
 		writer.setHeaderProvider(header);
@@ -78,22 +114,6 @@ public class StreamTest extends BaseParseTest {
 		reader.setHeaderProvider(header);
 		Envelope<Integer> env = reader.read();
 		assertEquals(1, (int) env.getHeader()); 
-		assertEquals(msg.getMsg(), ((Tell)env.getMessage()).getMsg());
-	}
-	
-	@Test
-	public void testMessage() throws Exception {
-		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		Tell msg = Tell.newBuilder().setMsg("hello worlds").build();
-		StreamWriter<Integer> writer = new StreamWriter<Integer>(types, out);
-		writer.write(new Envelope<Integer>(1, msg));
-		byte[] bytes = out.toByteArray();
-		ByteArrayInputStream in = new ByteArrayInputStream(bytes);
-		StreamReader<Integer> reader = new StreamReader<Integer>(types, in);
-		reader.setChecksumProvider(checksum);
-		reader.setHeaderProvider(header);
-		Envelope<Integer> env = reader.read();
-		assertNull(env.getHeader());
 		assertEquals(msg.getMsg(), ((Tell)env.getMessage()).getMsg());
 	}
 	

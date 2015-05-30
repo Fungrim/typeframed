@@ -33,7 +33,7 @@ public class CRC32MessageDigestTest {
 		CRC32 crc32 = new CRC32();
 		crc32.update(raw);
 		long val1 = crc32.getValue();
-		int val2 = new DataInputStream(new ByteArrayInputStream(arr1)).readInt();
-		Assert.assertEquals((int) val1, val2);
+		long val2 = new DataInputStream(new ByteArrayInputStream(arr1)).readLong();
+		Assert.assertEquals(val1, val2);
 	}
 }
