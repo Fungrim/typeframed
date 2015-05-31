@@ -21,6 +21,7 @@ import static org.typeframed.protobuf.parser.Utilities.hasOption;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -126,14 +127,14 @@ public class StandardDictionaryParser implements DictionaryParser {
 	public Set<MessageDescriptor> parseMessageDescriptors(Source[] protoFiles) throws IOException {
 		Map<Integer, MessageDescriptor> map = new HashMap<Integer, MessageDescriptor>();
 		for (Source f : protoFiles) {
-			parse(f, map);
+			initParse(f, map);
 		}
 		return new HashSet<MessageDescriptor>(map.values());
 	}
 
 	
 	// --- PRIVATE METHODS --- //
-
+	
 	@VisibleForTesting
 	@SuppressWarnings("unchecked")
 	Map<Integer, Class<? extends Message>> parseClassMap(Source[] protoFiles) throws IOException, ClassNotFoundException {
@@ -147,7 +148,7 @@ public class StandardDictionaryParser implements DictionaryParser {
 	}
 	
 	@SuppressWarnings("rawtypes")
-	private void parse(Source f, Map<Integer, MessageDescriptor> map) throws IOException {
+	private void initParse(Source f, Map<Integer, MessageDescriptor> map) throws IOException {
 		ProtobufParser parser = Parboiled.createParser(ProtobufParser.class);
 		ReportingParseRunner runner = new ReportingParseRunner(parser.File());
 		String file = CharStreams.toString(f.getReader());
@@ -155,75 +156,79 @@ public class StandardDictionaryParser implements DictionaryParser {
 		if(result.hasErrors()) {
 			throw new ParserError(toStartLocations(result.parseErrors));
 		} else {
-			parse(f, (RootNode) result.valueStack.peek(), map);
+			parseRoot(f, (RootNode) result.valueStack.peek(), map);
 		}
 	}
 
-	private void parse(Source file, RootNode root, Map<Integer, MessageDescriptor> map) {
-		String javaPackage = findPackage(root);
-		log.debug("Java package name: " + javaPackage);
-		String parentClass = findRootClass(file, root, javaPackage);
-		log.debug("Java root class name: " + parentClass);
+	private void parseRoot(Source file, RootNode root, Map<Integer, MessageDescriptor> map) {
+		Map<Option, String> optionMap = createOptionMap(file, root);
 		for (FieldNode node : root.getNodes()) {
 			if(node instanceof MessageNode && !(node instanceof ExtendNode)) {
-				parse(parentClass, (MessageNode) node, map, javaPackage);
+				parse(optionMap, (MessageNode) node, map, null);
 			}
 		}
 	}
 
-	private void parse(String parentClass, MessageNode node, Map<Integer, MessageDescriptor> map, String javaPackage) {
+	private Map<Option, String> createOptionMap(Source file, RootNode root) {
+		String javaPackage = findJavaPackage(root);
+		log.debug("Java package name: " + javaPackage);
+		String parentClass = findJavaOuterClass(file, root, javaPackage);
+		log.debug("Java root class name: " + parentClass);
+		String goPackage = findGoPackage(root);
+		log.debug("Go package name: " + goPackage);
+		Map<Option, String> map = new EnumMap<Option, String>(Option.class);
+		map.put(Option.GO_PACKAGE, goPackage);
+		map.put(Option.JAVA_PACKAGE, javaPackage);
+		map.put(Option.JAVA_OUTER_CLASSNAME, parentClass);
+		return map;
+	}
+
+	private void parse(Map<Option, String> options, MessageNode node, Map<Integer, MessageDescriptor> map, MessageDescriptor parent) {
 		log.debug("Parsing message '" + node.getName() + "'");
 		int id = inspector.getId(node);
 		if(id == -1) {
 			errorHandler.typeMissingId(node.getName());
 		} else {
-			String cl = generateClassName(parentClass, javaPackage, node.getName());
-			log.info("Java class name '" + cl + "' mapped to ID " + id);
 			if(map.containsKey(id)) {
 				errorHandler.duplicateId(id, map.get(id).getNodeName(), node.getName());
 			}
-			map.put(id, new MessageDescriptor(id, node.getName(), cl));
+			MessageDescriptor d = new MessageDescriptor(id, node.getName(), options, parent);
+			map.put(id, d);
 			for (FieldNode subnode : node.getBody().getNodes()) {
 				if(subnode instanceof MessageNode && !(subnode instanceof ExtendNode)) {
-					parse(cl, (MessageNode) subnode, map, javaPackage);
+					parse(options, (MessageNode) subnode, map, d);
 				}
 			}
+			log.info("Message '" + d + "' mapped to ID " + id);
 		}
 	}
 	
-	private String findRootClass(Source file, RootNode root, String javaPackage) {
-		String tmp = null; 
-		if(hasOption(root, "java_outer_classname")) {
-			tmp = getOption(root, "java_outer_classname", true);
+	private String findJavaOuterClass(Source file, RootNode root, String javaPackage) {
+		if(hasOption(root, Option.JAVA_OUTER_CLASSNAME.getOptionName())) {
+			return getOption(root, Option.JAVA_OUTER_CLASSNAME.getOptionName(), true);
 		} else {
-			tmp = getRootClassFromFile(file);
-		}
-		if(tmp == null) {
-			return null;
-		} else if(javaPackage != null) {
-			return javaPackage + "." + tmp;
-		} else {
-			return tmp;
+			return getRootClassFromFile(file);
 		}
  	}
 
-	private String generateClassName(String parentClass, String javaPackage, String name) {
-		if(parentClass != null) {
-			return parentClass + "$" + name;
-		} else if(javaPackage != null) {
-			return javaPackage + "." + name;
-		} else {
-			return name;
-		}
-	}
-
-	private String findPackage(RootNode root) {
+	private String findJavaPackage(RootNode root) {
 		String tmp = null;
 		if(root.getRootPackage() != null) {
 			tmp = root.getRootPackage();
 		}
-		if(hasOption(root, "java_package")) {
-			tmp = getOption(root, "java_package", true);
+		if(hasOption(root, Option.JAVA_PACKAGE.getOptionName())) {
+			tmp = getOption(root, Option.JAVA_PACKAGE.getOptionName(), true);
+		}
+		return tmp;
+	}
+	
+	private String findGoPackage(RootNode root) {
+		String tmp = null;
+		if(root.getRootPackage() != null) {
+			tmp = root.getRootPackage();
+		}
+		if(hasOption(root, Option.GO_PACKAGE.getOptionName())) {
+			tmp = getOption(root, Option.GO_PACKAGE.getOptionName(), true);
 		}
 		return tmp;
 	}

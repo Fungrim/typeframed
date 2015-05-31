@@ -15,39 +15,53 @@
  */
 package org.typeframed.protobuf.parser;
 
+import java.util.Map;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class MessageDescriptor {
 	
 	private int typeId;
-	private String javaClassName;
-	private String javaCanonicalClassName;
 	private String nodeName;
+	private MessageDescriptor parent;
+	private Map<Option, String> options;
 
-	public MessageDescriptor(int typeId, String nodeName, String javaClassName) {
+	public MessageDescriptor(int typeId, String nodeName, Map<Option, String> options, MessageDescriptor parent) {
 		this.typeId = typeId;
-		this.javaClassName = javaClassName;
-		this.javaCanonicalClassName = this.javaClassName.replace('$', '.');
 		this.nodeName = nodeName;
+		this.options = options;
+		this.parent = parent;
 	}
 	
 	public int getTypeId() {
 		return typeId;
 	}
 
-	public String getJavaCanonicalClassName() {
-		return javaCanonicalClassName;
+	public String getJavaClassName() {
+		if(parent != null) {
+			return parent.getJavaClassName() + "$" + nodeName;
+		} else {
+			String pack = "";
+			if(options.containsKey(Option.JAVA_PACKAGE)) {
+				pack = options.get(Option.JAVA_PACKAGE) + ".";
+			}
+			if(options.containsKey(Option.JAVA_OUTER_CLASSNAME)) {
+				pack += options.get(Option.JAVA_OUTER_CLASSNAME);
+				return pack + "$" + nodeName;
+			} else {
+				return pack + "." + nodeName;
+			}
+		}
 	}
 	
-	public String getJavaClassName() {
-		return javaClassName;
+	public String getCanonicalJavaClassName() {
+		return getJavaClassName().replace('$', '.');
 	}
 	
 	@Override
 	public String toString() {
-		return ToStringBuilder.reflectionToString(this);
+		return (parent != null ? parent.toString() + "." : "") + nodeName;
 	}
 	
 	@Override

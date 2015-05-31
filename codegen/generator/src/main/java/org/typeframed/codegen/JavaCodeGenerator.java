@@ -70,8 +70,8 @@ public class JavaCodeGenerator extends BaseCodeGenerator {
 			println(wr, "public void forward(Message msg) {", 1);
 			println(wr, "Class<? extends Message> cl = msg.getClass();", 2);
 			for (MessageDescriptor desc : descriptors) {
-				println(wr, "if(" + desc.getJavaCanonicalClassName() + ".class.equals(cl)) {", 2);
-				println(wr, "target.handle((" + desc.getJavaCanonicalClassName() + ") msg);", 3);
+				println(wr, "if(" + desc.getCanonicalJavaClassName() + ".class.equals(cl)) {", 2);
+				println(wr, "target.handle((" + desc.getCanonicalJavaClassName() + ") msg);", 3);
 				println(wr, "return;", 3);
 				println(wr, "}", 2);
 			}
@@ -89,7 +89,7 @@ public class JavaCodeGenerator extends BaseCodeGenerator {
 			println(wr, "public abstract class " + HANDLER_CLASSNAME + " implements Target {");
 			wr.println();
 			for (MessageDescriptor desc : descriptors) {
-				println(wr, "public abstract void handle(" + desc.getJavaCanonicalClassName() + " msg);", 1);
+				println(wr, "public abstract void handle(" + desc.getCanonicalJavaClassName() + " msg);", 1);
 				wr.println();
 			}
 			println(wr, "}");
@@ -114,7 +114,7 @@ public class JavaCodeGenerator extends BaseCodeGenerator {
 			println(wr, "public int getId(Message msg) throws UnknownMessageException {", 1);
 			println(wr, "Class<? extends Message> cl = msg.getClass();", 2);
 			for (MessageDescriptor desc : descriptors) {
-				println(wr, "if(" + desc.getJavaCanonicalClassName() + ".class.equals(cl)) {", 2);
+				println(wr, "if(" + desc.getCanonicalJavaClassName() + ".class.equals(cl)) {", 2);
 				println(wr, "return " + desc.getTypeId() + ";", 3);
 				println(wr, "}", 2);
 			}
@@ -126,7 +126,7 @@ public class JavaCodeGenerator extends BaseCodeGenerator {
 			println(wr, "Class<? extends Message> cl = null;", 2);
 			for (MessageDescriptor desc : descriptors) {
 				println(wr, "if(id == " + desc.getTypeId() + ") {", 2);
-				println(wr, "cl = " + desc.getJavaCanonicalClassName() + ".class;", 3);
+				println(wr, "cl = " + desc.getCanonicalJavaClassName() + ".class;", 3);
 				println(wr, "}", 2);
 			}
 			println(wr, "if(cl == null) {", 2);
