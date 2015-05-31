@@ -17,7 +17,7 @@ public class GoCodeGenerator extends BaseCodeGenerator {
 		"reflect"
 	};
 	
-	public GoCodeGenerator(Config config, CodegenLogger logger) {
+	public GoCodeGenerator(GoConfig config, CodegenLogger logger) {
 		super(config, logger);
 		super.createDirs = false;
 	}
@@ -35,6 +35,9 @@ public class GoCodeGenerator extends BaseCodeGenerator {
 	private void writeImports(PrintWriter wr) {
 		println(wr, "import (");
 		for (String s : IMPORTS) {
+			println(wr, "\"" + s + "\"", 1);
+		}
+		for (String s : ((GoConfig)super.config).getExtraImports()) {
 			println(wr, "\"" + s + "\"", 1);
 		}
 		println(wr, ")");

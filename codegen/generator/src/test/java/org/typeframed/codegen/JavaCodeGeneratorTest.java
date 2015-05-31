@@ -28,7 +28,7 @@ public class JavaCodeGeneratorTest {
 	
 	@Test
 	public void testCreateGo() throws Exception {
-		Config config = new Config();
+		GoConfig config = new GoConfig();
 		config.setOutputDir(new File("build/generate-test"));
 		config.setProtoFiles(new Source[] { new FileSource(new File("src/test/proto/echo.proto")) });
 		config.setIdOptionName("type_id");
