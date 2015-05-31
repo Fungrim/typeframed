@@ -16,6 +16,7 @@ dependencies {
   compile project(':typeframed-protobuf')
   compile libraries.protobuf
   compile libraries.guava
+  compile 'com.github.spullara.cli-parser:cli-parser:1.1.1'
   testCompile libraries.junit
   testCompile libraries.mockito
 }

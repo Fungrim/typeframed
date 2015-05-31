@@ -12,11 +12,14 @@ public class GoCodeGenerator extends BaseCodeGenerator {
 
 	private static final String TAB = "    ";
 	private static final String[] IMPORTS = new String[] {
-		"github.com/golang/protobuf/proto"
+		"github.com/golang/protobuf/proto",
+		"bitbucket.org/fungrim/go.typeframed",
+		"reflect"
 	};
 	
 	public GoCodeGenerator(Config config, CodegenLogger logger) {
 		super(config, logger);
+		super.createDirs = false;
 	}
 
 	@Override
@@ -32,7 +35,7 @@ public class GoCodeGenerator extends BaseCodeGenerator {
 	private void writeImports(PrintWriter wr) {
 		println(wr, "import (");
 		for (String s : IMPORTS) {
-			println(wr, s, 1);
+			println(wr, "\"" + s + "\"", 1);
 		}
 		println(wr, ")");
 		wr.println();
@@ -42,11 +45,23 @@ public class GoCodeGenerator extends BaseCodeGenerator {
 		println(wr, "type GoTypeDictionary struct{}");
 		wr.println();
 		println(wr, "func (d *GoTypeDictionary) GetId(msg proto.Message) (int, error) {");
-		
+		println(wr, "msgType := reflect.TypeOf(msg).Elem()", 1);
+		for (MessageDescriptor d : descriptors) {
+			// TODO check package?
+			println(wr, "if msgType.Name() == \"" + d.getGoStructName() + "\" {", 1);
+			println(wr, "return " + d.getTypeId() + ", nil", 2);
+			println(wr, "}", 1);
+		}
+		println(wr, "return -1, typeframed.NewUnknownMessage(msgType.Name())", 1);
 		println(wr, "}");
 		wr.println();
 		println(wr, "func (d *GoTypeDictionary) NewMessageFromId(id int) (proto.Message, error) {");
-		
+		for (MessageDescriptor d : descriptors) {
+			println(wr, "if id == " + d.getTypeId() + " {", 1);
+			println(wr, "return &" + d.getGoStructName() + "{}, nil", 2);
+			println(wr, "}", 1);
+		}
+		println(wr, "return nil, typeframed.NewNoSuchType(id)", 1);
 		println(wr, "}");
 		wr.println();
 	}

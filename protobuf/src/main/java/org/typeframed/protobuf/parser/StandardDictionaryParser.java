@@ -193,13 +193,13 @@ public class StandardDictionaryParser implements DictionaryParser {
 				errorHandler.duplicateId(id, map.get(id).getNodeName(), node.getName());
 			}
 			MessageDescriptor d = new MessageDescriptor(id, node.getName(), options, parent);
+			log.debug("Message '" + d + "' mapped to ID " + id);
 			map.put(id, d);
 			for (FieldNode subnode : node.getBody().getNodes()) {
 				if(subnode instanceof MessageNode && !(subnode instanceof ExtendNode)) {
 					parse(options, (MessageNode) subnode, map, d);
 				}
 			}
-			log.info("Message '" + d + "' mapped to ID " + id);
 		}
 	}
 	

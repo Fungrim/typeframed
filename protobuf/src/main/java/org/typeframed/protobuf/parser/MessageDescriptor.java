@@ -55,6 +55,14 @@ public class MessageDescriptor {
 		}
 	}
 	
+	public String getGoStructName() {
+		String root = "";
+		if (parent != null) {
+			root = parent.getGoStructName() + "_";
+		}
+		return root + nodeName;
+	}
+	
 	public String getCanonicalJavaClassName() {
 		return getJavaClassName().replace('$', '.');
 	}
@@ -77,4 +85,5 @@ public class MessageDescriptor {
 	public String getNodeName() {
 		return nodeName;
 	}
+
 }

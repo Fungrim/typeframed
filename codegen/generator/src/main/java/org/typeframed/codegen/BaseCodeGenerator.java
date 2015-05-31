@@ -19,6 +19,7 @@ public abstract class BaseCodeGenerator implements CodeGenerator {
 
 	protected Config config;
 	protected CodegenLogger logger;
+	protected boolean createDirs = true;
 
 	protected BaseCodeGenerator(Config config, CodegenLogger logger) {
 		this.config = config;
@@ -39,7 +40,7 @@ public abstract class BaseCodeGenerator implements CodeGenerator {
 
 	private File findOutputDir(String packageName, Config config) {
 		String javaDir = packageName.replace('.', File.separatorChar);
-		if(javaDir.length() > 0) {
+		if(createDirs && javaDir.length() > 0) {
 			return new File(config.getOutputDir(), javaDir);
 		} else {
 			return config.getOutputDir();
@@ -47,7 +48,9 @@ public abstract class BaseCodeGenerator implements CodeGenerator {
 	}
 	
 	protected PrintWriter openFile(File f) throws IOException {
-		Files.createParentDirs(f);
+		if(createDirs) {
+			Files.createParentDirs(f);
+		} 
 		return createWriter(f);
 	}
 	
@@ -55,7 +58,7 @@ public abstract class BaseCodeGenerator implements CodeGenerator {
 		return new PrintWriter(new BufferedWriter(new FileWriter(output)));
 	}
 	
-	private String findPackageName(DictionaryParser parser, Config config) {
+	protected String findPackageName(DictionaryParser parser, Config config) {
 		// TODO find package from protofile? but what if there are multiple files?
 		String s = config.getCodegenPackage();
 		return s == null ? "" : s;
