@@ -5,10 +5,20 @@ apply plugin: 'protobuf'
 buildscript {
   repositories {
     mavenCentral()
+    jcenter()
   }
   dependencies {
+    classpath 'us.kirchmeier:gradle-capsule-plugin:1.0-rc1'
     classpath libraries.protobufplugin
   }
+}
+
+apply plugin: 'us.kirchmeier.capsule'
+
+task fatCapsule(type: FatCapsule) {
+  applicationClass 'org.typeframed.codegen.GoCodeGeneratorClient'
+  baseName 'gogenerator'
+  classifier ''
 }
 
 dependencies {
