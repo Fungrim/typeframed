@@ -49,9 +49,11 @@ public class GoCodeGenerator extends BaseCodeGenerator {
 		wr.println();
 		println(wr, "func (d *GoTypeDictionary) GetId(msg proto.Message) (int, error) {");
 		println(wr, "msgType := reflect.TypeOf(msg).Elem()", 1);
+		boolean qualifiedNames = ((GoConfig)super.config).getExtraImports().length > 0;
+		String reflectMethod = (qualifiedNames ? ".String()" : ".Name()");
 		for (MessageDescriptor d : descriptors) {
 			// TODO check package?
-			println(wr, "if msgType.Name() == \"" + d.getGoStructName() + "\" {", 1);
+			println(wr, "if msgType" + reflectMethod +" == \"" + d.getGoStructName(qualifiedNames) + "\" {", 1);
 			println(wr, "return " + d.getTypeId() + ", nil", 2);
 			println(wr, "}", 1);
 		}
@@ -61,7 +63,7 @@ public class GoCodeGenerator extends BaseCodeGenerator {
 		println(wr, "func (d *GoTypeDictionary) NewMessageFromId(id int) (proto.Message, error) {");
 		for (MessageDescriptor d : descriptors) {
 			println(wr, "if id == " + d.getTypeId() + " {", 1);
-			println(wr, "return &" + d.getGoStructName() + "{}, nil", 2);
+			println(wr, "return &" + d.getGoStructName(qualifiedNames) + "{}, nil", 2);
 			println(wr, "}", 1);
 		}
 		println(wr, "return nil, typeframed.NewNoSuchType(id)", 1);

@@ -26,8 +26,8 @@ public class GoCodeGeneratorClient {
 	@Argument(alias = "p", description = "Package for the generated code, defaults to directory name", required = false)
 	private String codePackage;
 	
-	//@Argument(alias = "x", description = "Comma delimited list of extra imports for generated code, optional", required = false, delimiter=",")
-	//private String[] extraImports = new String[0];	
+	@Argument(alias = "x", description = "Comma delimited list of extra imports for generated code, optional", required = false, delimiter=",")
+	private String[] extraImports = new String[0];	
 	
 	@Argument(alias = "i", description = "Name of ID option, defaults to 'type_id'", required = false)
 	private String idOptionName = "type_id";
@@ -83,6 +83,7 @@ public class GoCodeGeneratorClient {
 		if(codePackage == null) {
 			codePackage = con.getOutputDir().getName();
 		}
+		con.setExtraImports(extraImports);
 		con.setCodegenPackage(codePackage);
 		con.setProtoFiles(findFiles());
 		return con;

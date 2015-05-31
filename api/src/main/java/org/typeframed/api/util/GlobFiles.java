@@ -8,21 +8,12 @@ import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.PathMatcher;
-import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GlobFiles {
-	
-	public static void main(String[] args) throws IOException {
-		List<Path> f = find(Paths.get("/Users/larsan/Development/go/src/bitbucket.org/fungrim/prototest"), 
-				"**/*.proto");
-		for (Path p : f) {
-			System.out.println(p);
-		}
-	}
 
 	public static List<Path> find(Path root, String glob) throws IOException {
         Finder finder = new Finder(root, glob);

@@ -55,10 +55,12 @@ public class MessageDescriptor {
 		}
 	}
 	
-	public String getGoStructName() {
+	public String getGoStructName(boolean qualified) {
 		String root = "";
 		if (parent != null) {
-			root = parent.getGoStructName() + "_";
+			root = parent.getGoStructName(true) + "_";
+		} else if(qualified) {
+			root = options.get(Option.GO_PACKAGE) + ".";
 		}
 		return root + nodeName;
 	}
